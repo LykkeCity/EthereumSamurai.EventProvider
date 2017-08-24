@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EthereumSamurai.EventProvider.Core.Actors\EthereumSamurai.EventProvider.Core.Actors.csproj" />
+    <ProjectReference Include="..\EthereumSamurai.EventProvider.Core.Messages\EthereumSamurai.EventProvider.Core.Messages.csproj" />
+  </ItemGroup>
+
+</Project>

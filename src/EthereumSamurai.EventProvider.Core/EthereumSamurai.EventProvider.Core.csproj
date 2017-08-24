@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="system.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="System.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Akka" Version="1.3.0" />
+    <PackageReference Include="Akka.DI.Core" Version="1.3.0" />
+    <PackageReference Include="Akka.Serialization.Hyperion" Version="1.3.0-beta50" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.4.4" />
+    <PackageReference Include="RabbitMQ.Client" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EthereumSamurai.EventProvider.Configuration\EthereumSamurai.EventProvider.Configuration.csproj" />
+    <ProjectReference Include="..\EthereumSamurai.EventProvider.Core.Actors\EthereumSamurai.EventProvider.Core.Actors.csproj" />
+    <ProjectReference Include="..\EthereumSamurai.EventProvider.Core.Messages\EthereumSamurai.EventProvider.Core.Messages.csproj" />
+    <ProjectReference Include="..\EthereumSamurai.EventProvider.Notifications\EthereumSamurai.EventProvider.Notifications.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Actors\Behaviors\" />
+  </ItemGroup>
+
+</Project>
