@@ -31,8 +31,4 @@
     <ProjectReference Include="..\EthereumSamurai.EventProvider.Notifications\EthereumSamurai.EventProvider.Notifications.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Actors\Behaviors\" />
-  </ItemGroup>
-
 </Project>

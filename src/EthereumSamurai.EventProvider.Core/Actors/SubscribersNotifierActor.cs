@@ -1,24 +1,24 @@
 ﻿namespace EthereumSamurai.EventProvider.Core.Actors
 {
     using System;
-    using System.Text;
     using Akka.Actor;
     using Akka.Event;
+    using Behaviors;
     using Messages;
-    using Newtonsoft.Json;
-    using RabbitMQ.Client;
 
 
 
     public sealed class SubscribersNotifierActor : ReceiveActor
     {
-        private readonly IModel          _channel;
-        private readonly ILoggingAdapter _logger;
 
-        public SubscribersNotifierActor(IModel channel)
+        private readonly ISubscriberNotifierBehavior _behavior;
+        private readonly ILoggingAdapter             _logger;
+
+        public SubscribersNotifierActor(
+            ISubscriberNotifierBehavior behavior)
         {
-            _channel = channel;
-            _logger  = Context.GetLogger();
+            _behavior = behavior;
+            _logger   = Context.GetLogger();
 
             Receive<Notify>(
                 msg => Process(msg));
@@ -28,14 +28,7 @@
         {
             try
             {
-                var notificationJson = JsonConvert.SerializeObject(message.Notification);
-
-                _channel.BasicPublish
-                (
-                    exchange:   message.Exchange,
-                    routingKey: message.RoutingKey,
-                    body:       Encoding.UTF8.GetBytes(notificationJson)
-                );
+                _behavior.Process(message);
             }
             catch (Exception e)
             {

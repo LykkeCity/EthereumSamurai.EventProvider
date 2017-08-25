@@ -3,9 +3,9 @@
     using Akka.Routing;
     using Notifications;
 
-    internal sealed class Notify : IConsistentHashable
+    public sealed class Notify : IConsistentHashable
     {
-        public Notify(string exchange, string routingKey, INotification notification)
+        internal Notify(string exchange, string routingKey, INotification notification)
         {
             ConsistentHashKey = CalculateConsistenHashKey(exchange, routingKey);
             Exchange          = exchange;

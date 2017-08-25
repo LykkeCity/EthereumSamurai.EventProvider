@@ -3,10 +3,8 @@
     using System;
     using System.Runtime.Loader;
     using System.Threading;
-    using Akka.Actor;
     using Api.Hosting;
     using Core.Hosting;
-    using Microsoft.Extensions.DependencyInjection;
 
 
 
@@ -58,7 +56,7 @@
 
                     eventArgs.Cancel = true;
                 }
-                //// Processing Ctrl-Bbreak or SIGQUIT
+                //// Processing Ctrl-Break or SIGQUIT
                 else
                 {
                     //// Process will not terminate in debug mode of Visual Studio,

@@ -1,26 +1,24 @@
 ﻿namespace EthereumSamurai.EventProvider.Core.Actors
 {
-    using System.Linq;
     using Akka.Actor;
+    using Behaviors;
     using Messages;
-    using Repositories;
     using Utils;
 
 
 
     public sealed class Erc20BalanceChangesSubscribtionManagerActor : ReceiveActor
     {
-        private readonly ICanTell                                   _replayManager;
-        private readonly IErc20BalanceChangesSubscriptionRepository _subscriptions;
+        private readonly IErc20BalanceChangesSubscriptionManagerBehavior _behavior;
+        private readonly ICanTell                                        _replayManager;
 
 
 
-        public Erc20BalanceChangesSubscribtionManagerActor(
-            IErc20BalanceChangesSubscriptionRepository subscriptions)
+        public Erc20BalanceChangesSubscribtionManagerActor(IErc20BalanceChangesSubscriptionManagerBehavior behavior)
         {
+            _behavior      = behavior;
             _replayManager = Context.ActorSelection(ActorPaths.Erc20BalanceChangesReplayManager);
-            _subscriptions = subscriptions;
-
+            
             Receive<SubscribeToErc20BalanceChanges>(
                 msg => Process(msg));
 
@@ -30,63 +28,12 @@
 
         private void Process(SubscribeToErc20BalanceChanges message)
         {
-            if (message.Contracts.Any())
-            {
-                foreach (var contract in message.Contracts)
-                {
-                    _subscriptions.Subscribe
-                    (
-                        exchange:    message.Exchange,
-                        routingKey:  message.RoutingKey,
-                        assetHolder: message.AssetHolder,
-                        contract:    contract
-                    );
-                }
-            }
-            else
-            {
-                _subscriptions.Subscribe
-                (
-                    exchange:    message.Exchange,
-                    routingKey:  message.RoutingKey,
-                    assetHolder: message.AssetHolder
-                );
-            }
-            
-            _replayManager.Tell(new ReplayErc20BalanceChanges
-            (
-                exchange:    message.Exchange,
-                routingKey:  message.RoutingKey,
-                assetHolder: message.AssetHolder,
-                contracts:   message.Contracts
-            ), Self);
+            _behavior.Process(message, x => _replayManager.Tell(x, Self));
         }
 
         private void Process(UnsubscribeFromErc20BalanceChanges message)
         {
-            if (message.Contracts.Any())
-            {
-
-                foreach (var contract in message.Contracts)
-                {
-                    _subscriptions.Unsubscribe
-                    (
-                        exchange:    message.Exchange,
-                        routingKey:  message.RoutingKey,
-                        assetHolder: message.AssetHolder,
-                        contract:    contract
-                    );
-                }
-            }
-            else
-            {
-                _subscriptions.Unsubscribe
-                (
-                    exchange:    message.Exchange,
-                    routingKey:  message.RoutingKey,
-                    assetHolder: message.AssetHolder
-                );
-            }
+            _behavior.Process(message);
         }
     }
 }

@@ -1,24 +1,24 @@
 ﻿namespace EthereumSamurai.EventProvider.Core.Actors
 {
     using Akka.Actor;
+    using Behaviors;
     using Messages;
-    using Repositories;
     using Utils;
 
 
 
     public sealed class Erc20TransferCommitsSubscriptionManagerActor : ReceiveActor
     {
-        private readonly ICanTell                              _replayManager;
-        private readonly IErc20TransfersSubscriptionRepository _subscriptions;
+        private readonly IErc20TransferCommitsSubscriptionManagerBehavior _behavior;
+        private readonly ICanTell                                         _replayManager;
 
 
 
         public Erc20TransferCommitsSubscriptionManagerActor(
-            IErc20TransfersSubscriptionRepository subscriptions)
+            IErc20TransferCommitsSubscriptionManagerBehavior behavior)
         {
+            _behavior      = behavior;
             _replayManager = Context.ActorSelection(ActorPaths.Erc20TransferCommitsReplayManager);
-            _subscriptions = subscriptions;
 
             Receive<SubscribeToErc20TransferCommits>(
                 msg => Process(msg));
@@ -29,39 +29,12 @@
 
         private void Process(SubscribeToErc20TransferCommits message)
         {
-            foreach (var contract in message.Contracts)
-            {
-                _subscriptions.Subscribe
-                (
-                    exchange:    message.Exchange,
-                    routingKey:  message.RoutingKey,
-                    assetHolder: message.AssetHolder,
-                    contract:    contract
-                );
-            }
-
-            _replayManager.Tell(new ReplayErc20TransferCommits
-            (
-                exchange:     message.Exchange,
-                routingKey:   message.RoutingKey,
-                replayNumber: default(int?),
-                assetHolders: new[] { message.AssetHolder },
-                contracts:    message.Contracts
-            ), Self);
+            _behavior.Process(message, x => _replayManager.Tell(x, Self));
         }
 
         private void Process(UnsubscribeFromErc20TransferCommits message)
         {
-            foreach (var contract in message.Contracts)
-            {
-                _subscriptions.Unsubscribe
-                (
-                    exchange:    message.Exchange,
-                    routingKey:  message.RoutingKey,
-                    assetHolder: message.AssetHolder,
-                    contract:    contract
-                );
-            }
+            _behavior.Process(message);
         }
     }
 }
