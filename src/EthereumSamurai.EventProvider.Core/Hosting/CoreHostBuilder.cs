@@ -1,60 +1,59 @@
 ﻿namespace EthereumSamurai.EventProvider.Core.Hosting
 {
-    using System.Reflection;
-    using Akka.Actor;
-    using Akka.Configuration;
-    using Akka.DI.Core;
-    using DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection;
-
-
+    using Api.Hosting;
+    using Autofac;
+    using Service.Hosting;
 
     public class CoreHostBuilder : ICoreHostBuilder
     {
-        private readonly IServiceCollection _services;
-        private readonly Startup            _startup;
-
-
-        public CoreHostBuilder()
-        {
-            _services = new ServiceCollection();
-            _startup  = new Startup();
-            
-            _startup.ConfigureServices(_services);
-        }
-
-
-
         public ICoreHost Build()
         {
-            var serviceProviderFactory = new DefaultServiceProviderFactory();
-            var containerBuilder       = serviceProviderFactory.CreateBuilder(_services);
-            var container              = containerBuilder.BuildServiceProvider();
+            var containerBuilder = new ContainerBuilder();
+            var startup          = new Startup();
+            
 
-            var system = ActorSystem.Create
-            (
-                name:   "ethereum-samurai-event-provider",
-                config: GetSystemConfig()
-            );
+            startup.ConfigureServices(containerBuilder);
+            
+            ConfigureApiHost(containerBuilder);
 
-            var diResolver = new DependencyResolver
-            (
-                container: container,
-                system:    system
-            );
+            ConfigureServiceHost(containerBuilder);
 
-            system.AddDependencyResolver(diResolver);
+            ConfigureCoreHost(containerBuilder);
 
-            return new CoreHost(null, system);
+
+            var container = containerBuilder.Build();
+            
+            return container.Resolve<ICoreHost>();
         }
-        
-        private static Config GetSystemConfig()
+
+        private static void ConfigureApiHost(ContainerBuilder builder)
         {
-            return ConfigurationFactory.FromResource
-            (
-                "EthereumSamurai.EventProvider.Core.system.json",
-                Assembly.GetExecutingAssembly()
-            );
+            builder
+                .RegisterType<ApiHostBuilder>()
+                .As<IApiHostBuilder>()
+                .SingleInstance();
+
+            builder
+                .Register((context, parameters) => context.Resolve<IApiHostBuilder>().Build());
+        }
+
+        private static void ConfigureCoreHost(ContainerBuilder builder)
+        {
+            builder
+                .RegisterType<CoreHost>()
+                .As<ICoreHost>()
+                .SingleInstance();
+        }
+
+        private static void ConfigureServiceHost(ContainerBuilder builder)
+        {
+            builder
+                .RegisterType<ServiceHostBuilder>()
+                .As<IServiceHostBuilder>()
+                .SingleInstance();
+
+            builder
+                .Register((context, parameters) => context.Resolve<IServiceHostBuilder>().Build());
         }
     }
 }

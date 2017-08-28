@@ -1,7 +1,7 @@
 ﻿namespace EthereumSamurai.EventProvider.Api.Controllers
 {
-    using Core.Actors.Proxies;
-    using Core.Messages;
+    using Service.Actors.Proxies;
+    using Service.Messages;
     using Microsoft.AspNetCore.Mvc;
     using Models;
 

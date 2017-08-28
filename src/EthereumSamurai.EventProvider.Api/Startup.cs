@@ -1,24 +1,31 @@
 ﻿namespace EthereumSamurai.EventProvider.Api
 {
+    using System;
+    using Autofac;
+    using Hosting;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
 
-    public sealed class Startup
+
+    public sealed class Startup : ApiHostStartup
     {
-        public void ConfigureServices(IServiceCollection services)
+        public Startup(ILifetimeScope parentScope)
+            : base(parentScope)
+        {
+
+        }
+
+
+        public override void Configure(IApplicationBuilder app)
+        {
+            app.UseMvc();
+        }
+
+        public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-        }
-        
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
             
-            app.UseMvc();
+            return base.ConfigureServices(services);
         }
     }
 }

@@ -9,15 +9,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider", "src\EthereumSamurai.EventProvider\EthereumSamurai.EventProvider.csproj", "{72B82708-4A41-4EB9-8843-E82624C88BEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Core", "src\EthereumSamurai.EventProvider.Core\EthereumSamurai.EventProvider.Core.csproj", "{861633C1-7FFA-452D-9C0A-412A51BD12C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Service", "src\EthereumSamurai.EventProvider.Service\EthereumSamurai.EventProvider.Service.csproj", "{861633C1-7FFA-452D-9C0A-412A51BD12C2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Core.Messages", "src\EthereumSamurai.EventProvider.Core.Messages\EthereumSamurai.EventProvider.Core.Messages.csproj", "{36AC7F21-1534-408F-9B61-1746928278E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Service.Messages", "src\EthereumSamurai.EventProvider.Service.Messages\EthereumSamurai.EventProvider.Service.Messages.csproj", "{36AC7F21-1534-408F-9B61-1746928278E3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Notifications", "src\EthereumSamurai.EventProvider.Notifications\EthereumSamurai.EventProvider.Notifications.csproj", "{7971DA52-FCFE-471B-955A-32F8066A2E0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthereumSamurai.EventProvider.Core.Actors", "src\EthereumSamurai.EventProvider.Core.Actors\EthereumSamurai.EventProvider.Core.Actors.csproj", "{E62565EB-C0E8-451A-A2E6-07C6DB3859B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Service.Actors", "src\EthereumSamurai.EventProvider.Service.Actors\EthereumSamurai.EventProvider.Service.Actors.csproj", "{E62565EB-C0E8-451A-A2E6-07C6DB3859B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthereumSamurai.EventProvider.Configuration", "src\EthereumSamurai.EventProvider.Configuration\EthereumSamurai.EventProvider.Configuration.csproj", "{A55339BA-CE05-4171-9881-C55FF912181F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Configuration", "src\EthereumSamurai.EventProvider.Configuration\EthereumSamurai.EventProvider.Configuration.csproj", "{A55339BA-CE05-4171-9881-C55FF912181F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthereumSamurai.EventProvider.Core", "src\EthereumSamurai.EventProvider.Core\EthereumSamurai.EventProvider.Core.csproj", "{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{A55339BA-CE05-4171-9881-C55FF912181F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A55339BA-CE05-4171-9881-C55FF912181F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A55339BA-CE05-4171-9881-C55FF912181F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +71,7 @@ Global
 		{7971DA52-FCFE-471B-955A-32F8066A2E0F} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
 		{E62565EB-C0E8-451A-A2E6-07C6DB3859B3} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
 		{A55339BA-CE05-4171-9881-C55FF912181F} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
+		{B72BE251-3862-4816-99F7-6E4D1ABF0FF8} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C814E8FB-3A36-4588-AF1E-4B687FE2B127}

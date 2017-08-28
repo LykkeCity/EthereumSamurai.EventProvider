@@ -1,70 +1,41 @@
 ﻿namespace EthereumSamurai.EventProvider.Core.Hosting
 {
     using System.Threading.Tasks;
-    using Actors;
-    using Akka.Actor;
-    using Akka.DI.Core;
-    using Akka.Routing;
+    using Api.Hosting;
+    using Service.Hosting;
 
-    internal class CoreHost : ICoreHost
+
+    public class CoreHost : ICoreHost
     {
-        private readonly IConfiguration _configuration;
-        private readonly ActorSystem    _system;
+        private readonly IApiHost     _apiHost;
+        private readonly IServiceHost _serviceHost;
+
 
         public CoreHost(
-            IConfiguration configuration,
-            ActorSystem    system)
+            IApiHost     apiHost,
+            IServiceHost serviceHost)
         {
-            _system = system;
+            _apiHost     = apiHost;
+            _serviceHost = serviceHost;
         }
 
-
-        private void CreateActor<T>(ActorMetadata metadata, RouterConfig routerConfig = null)
-            where T : ActorBase
-        {
-            var props = _system.DI().Props<T>();
-
-            if (routerConfig != null)
-            {
-                props = props.WithRouter(routerConfig);
-            }
-
-            _system.ActorOf(props, metadata.Name);
-        }
 
         public void Dispose()
         {
-            _system?.Dispose();
+            _apiHost?.Dispose();
+            _serviceHost?.Dispose();
         }
-
+        
         public void Start()
         {
-            CreateActor<Erc20BalanceChangesObserverActor>
-            (
-                metadata: ActorPaths.Erc20BalanceChangesObserver
-            );
-
-            CreateActor<Erc20TransferCommitsObserverActor>
-            (
-                metadata:     ActorPaths.Erc20TransferCommitsObserver,
-                routerConfig: new SmallestMailboxPool(_configuration.NumberOfErc20TransfersObservers)
-            );
-
-            CreateActor<IndexerNotificationsListenerActor>
-            (
-                metadata: ActorPaths.IndexerNotificationsListener
-            );
-
-            CreateActor<SubscribersNotifierActor>
-            (
-                metadata:     ActorPaths.SubscribersNotifier,
-                routerConfig: new ConsistentHashingPool(_configuration.NumberOfSubscribersNotifiers)
-            );
+            _serviceHost.Start();
+            _apiHost.Start();
         }
 
         public async Task StopAsync()
         {
-            throw new System.NotImplementedException();
+            await _apiHost.StopAsync();
+            await _serviceHost.StopAsync();
         }
     }
 }

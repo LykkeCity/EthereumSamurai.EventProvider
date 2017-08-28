@@ -3,16 +3,13 @@
     using System;
     using System.Runtime.Loader;
     using System.Threading;
-    using Api.Hosting;
     using Core.Hosting;
 
-
-
-    internal class ProgramInstance
+    
+    internal sealed class ProgramInstance
     {
         private static readonly TimeSpan ShutdownTimeout = TimeSpan.FromSeconds(90);
-
-        private readonly IApiHostBuilder     _apiHostBuilder;
+        
         private readonly ICoreHostBuilder    _coreHostBuilder;
         private readonly EventWaitHandle     _shutdownCompleted;
         private readonly EventWaitHandle     _shutdownStarted;
@@ -20,13 +17,9 @@
         private bool _exceptionCaught;
         private bool _signalProcessed;
 
-
-
-        public ProgramInstance(
-            IApiHostBuilder apiHostBuilder,
-            ICoreHostBuilder coreHostBuilder)
+        
+        public ProgramInstance(ICoreHostBuilder coreHostBuilder)
         {
-            _apiHostBuilder    = apiHostBuilder;
             _coreHostBuilder   = coreHostBuilder;
             _shutdownCompleted = new ManualResetEvent(false);
             _shutdownStarted   = new ManualResetEvent(false);
@@ -62,7 +55,7 @@
                     //// Process will not terminate in debug mode of Visual Studio,
                     //// but, if process started from console, it terminates successfully.
 
-                    Console.WriteLine("Termination signal received. Service will be terminated.");
+                    Console.WriteLine("Termination signal received. Application will be terminated.");
                 }
             };
         }
@@ -72,20 +65,17 @@
             try
             {
                 using (var core = _coreHostBuilder.Build())
-                using (var api  =  _apiHostBuilder.Build())
                 {
                     core.Start();
-                    api.Start();
-
-                    Console.WriteLine("Service has been started and is waiting for termination signal.");
+                    
+                    Console.WriteLine("Application has been started and is waiting for termination signal.");
                     
                     _shutdownStarted.WaitOne();
-
-                    await api.StopAsync();
+                    
                     await core.StopAsync();
                 }
 
-                Console.WriteLine("Service has been stopped.");
+                Console.WriteLine("Application has been stopped.");
 
                 _shutdownCompleted.Set();
             }
@@ -94,7 +84,7 @@
                 _exceptionCaught = true;
 
                 Console.WriteLine(e);
-                Console.WriteLine("Service will be terminated.");
+                Console.WriteLine("Application will be terminated.");
             }
         }
 
@@ -102,7 +92,7 @@
         {
             _shutdownStarted.Set();
 
-            Console.WriteLine("Termination signal received. Service will be stopped gracefully.");
+            Console.WriteLine("Termination signal received. Application will be stopped gracefully.");
 
             _shutdownCompleted.WaitOne(ShutdownTimeout);
         }

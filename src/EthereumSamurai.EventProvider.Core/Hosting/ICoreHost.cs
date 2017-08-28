@@ -6,7 +6,7 @@
     public interface ICoreHost : IDisposable
     {
         void Start();
-        
+
         Task StopAsync();
     }
 }
