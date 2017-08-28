@@ -2,16 +2,22 @@
 {
     public class Erc20TransferCommitReplayEndNotification : INotification
     {
-        public Erc20TransferCommitReplayEndNotification(int replayNumber)
+        /// <summary>
+        ///    Initializes a new instance of the <see cref="Erc20TransferCommitReplayEndNotification" /> class.
+        /// </summary>
+        public Erc20TransferCommitReplayEndNotification(int replayId)
         {
-            ReplayNumber = replayNumber;
+            ReplayId = replayId;
         }
 
 
-
+        /// <inheritdoc />
         public string Type
             => "Erc20TransferCommitReplayEnd";
 
-        public int ReplayNumber { get; }
+        /// <summary>
+        ///    Id of the replay, to mark <see cref="Erc20TransferCommitNotification"/> instances.
+        /// </summary>
+        public int ReplayId { get; }
     }
 }

@@ -14,7 +14,7 @@
 
     
         public Erc20TransferCommitsController(
-           IErc20TransferCommitsReplayManagerProxy replayManager,
+           IErc20TransferCommitsReplayManagerProxy       replayManager,
            IErc20TransferCommitsSubscriptionManagerProxy subscriptionManager)
         {
             _replayManager       = replayManager;
@@ -25,10 +25,10 @@
         public IActionResult Replay(Erc20TransferCommitsReplayRequest request)
         {
             _replayManager.Tell(new ReplayErc20TransferCommits(
-                exchange:     request.Exchange,
-                routingKey:   request.RoutingKey,
-                replayNumber: request.ReplayNumber,
-                assetHolder:  request.AssetHolder
+                exchange:    request.Exchange,
+                routingKey:  request.RoutingKey,
+                replayId:    request.ReplayNumber,
+                assetHolder: request.AssetHolder
             ));
 
             return Ok();

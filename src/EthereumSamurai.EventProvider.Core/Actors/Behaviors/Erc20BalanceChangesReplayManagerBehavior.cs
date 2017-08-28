@@ -38,7 +38,7 @@
                     balance:            balance.Balance,
                     blockNumber:        balance.BlockNumber,
                     contractAddress:    balance.ContractAddress,
-                    replayNumber:       message.ReplayNumber
+                    replayId:       message.ReplayNumber
                 );
 
                 notifications.EnqueueUnicast(changeNotification, message.Exchange, message.RoutingKey);

@@ -42,7 +42,7 @@
                     contractAddress:  transfer.ContractAddress,
                     from:             transfer.From,
                     logIndex:         transfer.LogIndex,
-                    replayNumber:     message.ReplayNumber,
+                    replayNumber:     message.ReplayId,
                     to:               transfer.To,
                     transactionHash:  transfer.TransactionHash,
                     transactionIndex: transfer.TransactionIndex,
@@ -52,13 +52,13 @@
                 notifications.EnqueueUnicast(transferCommitNotification, message.Exchange, message.RoutingKey);
             }
 
-            // If it is replay, initiated with replay number, preparing replay end notification
+            // If it is replay, initiated with replay id, preparing replay end notification
 
-            if (message.ReplayNumber.HasValue)
+            if (message.ReplayId.HasValue)
             {
                 var replayEndNotification = new Erc20TransferCommitReplayEndNotification
                 (
-                    replayNumber: message.ReplayNumber.Value
+                    replayId: message.ReplayId.Value
                 );
 
                 notifications.EnqueueUnicast(replayEndNotification, message.Exchange, message.RoutingKey);

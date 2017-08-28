@@ -48,7 +48,7 @@
                     balance:            balance.Balance,
                     blockNumber:        balance.BlockNumber,
                     contractAddress:    balance.ContractAddress,
-                    replayNumber:       default(int?)
+                    replayId:       default(int?)
                 );
 
                 var balanceSubscribers = _subscriptions.GetSubscribers

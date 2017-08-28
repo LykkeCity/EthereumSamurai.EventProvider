@@ -2,6 +2,9 @@
 {
     public class Erc20TransferCommitNotification : INotification
     {
+        /// <summary>
+        ///    Initializes a new instance of the <see cref="Erc20TransferCommitNotification" /> class.
+        /// </summary>
         public Erc20TransferCommitNotification(
             string blockHash,
             ulong  blockNumber,
@@ -29,7 +32,7 @@
         }
 
 
-
+        /// <inheritdoc />
         public string Type
             => "Erc20TransferCommit";
 
