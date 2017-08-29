@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Service.Actors", "src\EthereumSamurai.EventProvider.Service.Actors\EthereumSamurai.EventProvider.Service.Actors.csproj", "{E62565EB-C0E8-451A-A2E6-07C6DB3859B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Configuration", "src\EthereumSamurai.EventProvider.Configuration\EthereumSamurai.EventProvider.Configuration.csproj", "{A55339BA-CE05-4171-9881-C55FF912181F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Core", "src\EthereumSamurai.EventProvider.Core\EthereumSamurai.EventProvider.Core.csproj", "{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthereumSamurai.EventProvider.Core", "src\EthereumSamurai.EventProvider.Core\EthereumSamurai.EventProvider.Core.csproj", "{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EBE2F530-8B9B-47A7-B864-C91FDB228FAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +51,6 @@ Global
 		{E62565EB-C0E8-451A-A2E6-07C6DB3859B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E62565EB-C0E8-451A-A2E6-07C6DB3859B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E62565EB-C0E8-451A-A2E6-07C6DB3859B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A55339BA-CE05-4171-9881-C55FF912181F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A55339BA-CE05-4171-9881-C55FF912181F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A55339BA-CE05-4171-9881-C55FF912181F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A55339BA-CE05-4171-9881-C55FF912181F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,7 +66,6 @@ Global
 		{36AC7F21-1534-408F-9B61-1746928278E3} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
 		{7971DA52-FCFE-471B-955A-32F8066A2E0F} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
 		{E62565EB-C0E8-451A-A2E6-07C6DB3859B3} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
-		{A55339BA-CE05-4171-9881-C55FF912181F} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
 		{B72BE251-3862-4816-99F7-6E4D1ABF0FF8} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

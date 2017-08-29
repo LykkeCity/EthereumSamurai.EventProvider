@@ -27,7 +27,7 @@
             _replayManager.Tell(new ReplayErc20BalanceChanges(
                 exchange:     request.Exchange,
                 routingKey:   request.RoutingKey,
-                replayNumber: request.ReplayNumber,
+                replayNumber: request.ReplayId,
                 assetHolder:  request.AssetHolder
             ));
 

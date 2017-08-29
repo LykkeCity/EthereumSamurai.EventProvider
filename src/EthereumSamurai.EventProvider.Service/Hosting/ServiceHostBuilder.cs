@@ -4,34 +4,45 @@
     using Akka.DI.AutoFac;
     using Akka.DI.Core;
     using Autofac;
+    using Autofac.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
 
 
     public class ServiceHostBuilder : IServiceHostBuilder
     {
-        private readonly ILifetimeScope _parentScope;
-        private readonly ActorSystem    _system;
+        private readonly IConfigurationRoot _configuration;
+        private readonly ILifetimeScope     _parentScope;
+        private readonly ActorSystem        _system;
 
 
         public ServiceHostBuilder(
-            ILifetimeScope parentScope,
-            ActorSystem    system)
+            IConfigurationRoot configuration,
+            ILifetimeScope     parentScope,
+            ActorSystem        system)
         {
-            _parentScope = parentScope;
-            _system      = system;
+            _configuration = configuration;
+            _parentScope   = parentScope;
+            _system        = system;
         }
 
         
         public IServiceHost Build()
         {
-            var startup = new Startup();
-            var scope   = _parentScope.BeginLifetimeScope(x =>
+            var startup = new Startup(_configuration);
+            var scope   = _parentScope.BeginLifetimeScope(builder =>
             {
-                startup.ConfigureServices(x);
+                var services = new ServiceCollection();
+                
+                startup.ConfigureServices(services);
 
-                x.RegisterType<ServiceHost>()
+                builder.Populate(services);
+                
+                builder.RegisterType<ServiceHost>()
                  .As<IServiceHost>()
                  .SingleInstance();
             });
+            
 
             var systemDependencyResolver = new AutoFacDependencyResolver(scope, _system);
 

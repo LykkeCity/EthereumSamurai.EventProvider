@@ -5,16 +5,19 @@
     using Entities;
     using MongoDB.Driver;
 
-    public class Erc20SubscriptionRepository : IErc20SubscriptionRepository
+    public class Erc20SubscriptionRepository<T> : IErc20SubscriptionRepository<T>
+        where T : IErc20SubscriptionType
     {
         private const char Delimiter = '|';
 
         private readonly FilterDefinitionBuilder<Erc20SubscriptionEntity> _filterBuilder;
-        private readonly IMongoCollection<Erc20SubscriptionEntity> _subscriptions;
+        private readonly IMongoCollection<Erc20SubscriptionEntity>        _subscriptions;
 
 
 
-        public Erc20SubscriptionRepository(IMongoDatabase database, string collectionName)
+        public Erc20SubscriptionRepository(
+            string         collectionName,
+            IMongoDatabase database)
         {
             CollectionName = collectionName;
             _filterBuilder = Builders<Erc20SubscriptionEntity>.Filter;

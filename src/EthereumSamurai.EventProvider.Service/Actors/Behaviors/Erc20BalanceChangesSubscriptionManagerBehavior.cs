@@ -7,10 +7,10 @@
 
     public sealed class Erc20BalanceChangesSubscriptionManagerBehavior : IErc20BalanceChangesSubscriptionManagerBehavior
     {
-        private readonly IErc20BalanceChangesSubscriptionRepository _subscriptions;
+        private readonly IErc20SubscriptionRepository<IErc20BalanceChanges> _subscriptions;
 
         public Erc20BalanceChangesSubscriptionManagerBehavior(
-            IErc20BalanceChangesSubscriptionRepository subscriptions)
+            IErc20SubscriptionRepository<IErc20BalanceChanges> subscriptions)
         {
             _subscriptions = subscriptions;
         }

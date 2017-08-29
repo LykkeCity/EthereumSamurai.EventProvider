@@ -6,7 +6,7 @@
         
         public string Exchange { get; set; }
 
-        public int ReplayNumber { get; set; }
+        public int ReplayId { get; set; }
 
         public string RoutingKey { get; set; }
     }

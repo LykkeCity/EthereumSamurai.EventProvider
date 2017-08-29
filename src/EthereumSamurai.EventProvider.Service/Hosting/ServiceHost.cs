@@ -5,18 +5,22 @@
     using Akka.Actor;
     using Akka.DI.Core;
     using Akka.Routing;
+    using Microsoft.Extensions.Options;
+    using Options;
 
 
     internal class ServiceHost : IServiceHost
     {
-        private readonly IConfiguration _configuration;
-        private readonly ActorSystem    _system;
+        private readonly ServiceHostOptions _options;
+        private readonly ActorSystem        _system;
 
 
         public ServiceHost(
-            ActorSystem    system)
+            IOptions<ServiceHostOptions> options, 
+            ActorSystem                  system)
         {
-            _system = system;
+            _options = options.Value;
+            _system  = system;
         }
 
 
@@ -75,7 +79,7 @@
             CreateActor<SubscribersNotifierActor>
             (
                 metadata:     ActorPaths.SubscribersNotifier,
-                routerConfig: new ConsistentHashingPool(_configuration.NumberOfSubscribersNotifiers)
+                routerConfig: new ConsistentHashingPool(_options.NumberOfSubscribersNotifiers)
             );
         }
 
@@ -84,7 +88,7 @@
             CreateActor<Erc20TransferCommitsObserverActor>
             (
                 metadata:     ActorPaths.Erc20TransferCommitsObserver,
-                routerConfig: new SmallestMailboxPool(_configuration.NumberOfErc20TransfersObservers)
+                routerConfig: new SmallestMailboxPool(_options.NumberOfErc20TransfersObservers)
             );
         }
     }

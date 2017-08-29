@@ -6,16 +6,17 @@
 
 
 
-    public class Erc20SubscriptionRepositoryWithCache : IErc20SubscriptionRepository
+    public class Erc20SubscriptionRepositoryWithCache<T> : IErc20SubscriptionRepository<T>
+        where T : IErc20SubscriptionType
     {
-        private readonly IMemoryCache                 _cache;
-        private readonly TimeSpan                     _cacheDuration;
-        private readonly IErc20SubscriptionRepository _repository;
+        private readonly IMemoryCache                    _cache;
+        private readonly TimeSpan                        _cacheDuration;
+        private readonly IErc20SubscriptionRepository<T> _repository;
 
         public Erc20SubscriptionRepositoryWithCache(
-            IMemoryCache cache,
-            TimeSpan cacheDuration,
-            IErc20SubscriptionRepository repository)
+            IMemoryCache                    cache,
+            TimeSpan                        cacheDuration,
+            IErc20SubscriptionRepository<T> repository)
         {
             _cache         = cache;
             _cacheDuration = cacheDuration;

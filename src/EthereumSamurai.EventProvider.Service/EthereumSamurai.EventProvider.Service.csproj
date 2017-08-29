@@ -9,14 +9,15 @@
     <PackageReference Include="Akka.DI.AutoFac" Version="1.3.0" />
     <PackageReference Include="Akka.DI.Core" Version="1.3.0" />
     <PackageReference Include="Akka.Serialization.Hyperion" Version="1.3.0-beta50" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.4.4" />
     <PackageReference Include="RabbitMQ.Client" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EthereumSamurai.EventProvider.Configuration\EthereumSamurai.EventProvider.Configuration.csproj" />
     <ProjectReference Include="..\EthereumSamurai.EventProvider.Notifications\EthereumSamurai.EventProvider.Notifications.csproj" />
     <ProjectReference Include="..\EthereumSamurai.EventProvider.Service.Actors\EthereumSamurai.EventProvider.Service.Actors.csproj" />
     <ProjectReference Include="..\EthereumSamurai.EventProvider.Service.Messages\EthereumSamurai.EventProvider.Service.Messages.csproj" />

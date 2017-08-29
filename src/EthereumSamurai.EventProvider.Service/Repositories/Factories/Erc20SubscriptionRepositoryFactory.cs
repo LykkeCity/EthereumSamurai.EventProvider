@@ -20,10 +20,7 @@
         public IErc20SubscriptionRepository GetRepository(string collectionName)
         {
             return new Erc20SubscriptionRepository
-            (
-                database:       _database,
-                collectionName: collectionName
-            );
+            (collectionName: collectionName, database: _database);
         }
 
         public IErc20SubscriptionRepository GetRepositoryWithCache(string collectionName, TimeSpan cacheDuration)

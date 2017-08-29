@@ -4,15 +4,20 @@
     using Autofac;
     using Hosting;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Options;
 
 
     public sealed class Startup : ApiHostStartup
     {
-        public Startup(ILifetimeScope parentScope)
-            : base(parentScope)
-        {
+        private readonly IConfigurationRoot _configuration;
 
+        public Startup(
+            IConfigurationRoot configuration,
+            ILifetimeScope     parentScope) : base(parentScope)
+        {
+            _configuration = configuration;
         }
 
 
@@ -24,7 +29,10 @@
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            
+            services.AddOptions();
+
+            services.Configure<ApiOptions>(_configuration.GetSection("Api"));
+
             return base.ConfigureServices(services);
         }
     }

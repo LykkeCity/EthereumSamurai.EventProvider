@@ -27,7 +27,7 @@
             _replayManager.Tell(new ReplayErc20TransferCommits(
                 exchange:    request.Exchange,
                 routingKey:  request.RoutingKey,
-                replayId:    request.ReplayNumber,
+                replayId:    request.ReplayId,
                 assetHolder: request.AssetHolder
             ));
 

@@ -1,8 +1,9 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Repositories
 {
     using System.Collections.Generic;
-
-    public interface IErc20SubscriptionRepository
+    
+    public interface IErc20SubscriptionRepository<T>
+        where T : IErc20SubscriptionType
     {
         string CollectionName { get; }
 

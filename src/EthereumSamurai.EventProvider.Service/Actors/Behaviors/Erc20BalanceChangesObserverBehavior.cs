@@ -8,18 +8,22 @@
     using Repositories.Queries;
     using Utils;
 
+
+
     public sealed class Erc20BalanceChangesObserverBehavior : IErc20BalanceChangesObserverBehavior
     {
-        private readonly IErc20BalanceRepository                    _balances;
-        private readonly IErc20BalanceChangesSubscriptionRepository _subscriptions;
+        private readonly IErc20BalanceRepository                            _balances;
+        private readonly IErc20SubscriptionRepository<IErc20BalanceChanges> _subscriptions;
+
 
         public Erc20BalanceChangesObserverBehavior(
-            IErc20BalanceRepository balances,
-            IErc20BalanceChangesSubscriptionRepository subscriptions)
+            IErc20BalanceRepository                            balances,
+            IErc20SubscriptionRepository<IErc20BalanceChanges> subscriptions)
         {
             _balances      = balances;
             _subscriptions = subscriptions;
         }
+
 
         public void Process(BlockBalancesIndexed message, Action<Notify> sendNotificationAction)
         {

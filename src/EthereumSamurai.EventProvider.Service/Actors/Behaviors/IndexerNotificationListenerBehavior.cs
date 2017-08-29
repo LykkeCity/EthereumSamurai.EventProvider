@@ -12,15 +12,12 @@
     {
         private const string ConsumerTag = "IndexerNotificationListener";
 
-        private readonly IModel         _channel;
-        private readonly IConfiguration _configuration;
+        private readonly IModel _channel;
         
         public IndexerNotificationListenerBehavior(
-            IModel channel,
-            IConfiguration configuration)
+            IModel channel)
         {
-            _channel       = channel;
-            _configuration = configuration;
+            _channel = channel;
         }
 
         public void Process(
@@ -71,13 +68,13 @@
                 ));
             };
 
-            _channel.BasicConsume
-            ( 
-                consumer:    consumer, 
-                queue:       _configuration.IndexerNotificationsQueue,
-                autoAck:     true,
-                consumerTag: ConsumerTag
-            );
+            //_channel.BasicConsume
+            //( 
+            //    consumer:    consumer, 
+            //    queue:       _configuration.IndexerNotificationsQueue,
+            //    autoAck:     true,
+            //    consumerTag: ConsumerTag
+            //);
         }
 
         public void StopListening()

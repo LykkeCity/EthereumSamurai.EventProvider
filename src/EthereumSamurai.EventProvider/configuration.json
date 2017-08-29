@@ -1,0 +1,14 @@
+﻿{
+  "ConnectionStrings": {
+    "LykkeSettings": ""
+  },
+  "Api": {
+
+  },
+  "Service": {
+    "Host": {
+      "NumberOfErc20TransfersObservers": 1,
+      "NumberOfSubscribersNotifiers": 1 
+    }
+  } 
+}

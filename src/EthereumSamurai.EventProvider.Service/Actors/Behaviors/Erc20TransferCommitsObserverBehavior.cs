@@ -11,12 +11,12 @@
 
     public class Erc20TransferCommitsObserverBehavior : IErc20TransferCommitsObserverBehavior
     {
-        private readonly IErc20TransferHistoryRepository             _transfers;
-        private readonly IErc20TransferCommitsSubscriptionRepository _subscriptions;
+        private readonly IErc20TransferHistoryRepository                     _transfers;
+        private readonly IErc20SubscriptionRepository<IERc20TransferCommits> _subscriptions;
 
         public Erc20TransferCommitsObserverBehavior(
-            IErc20TransferHistoryRepository transfers,
-            IErc20TransferCommitsSubscriptionRepository subscriptions)
+            IErc20TransferHistoryRepository                     transfers,
+            IErc20SubscriptionRepository<IERc20TransferCommits> subscriptions)
         {
             _transfers     = transfers;
             _subscriptions = subscriptions;

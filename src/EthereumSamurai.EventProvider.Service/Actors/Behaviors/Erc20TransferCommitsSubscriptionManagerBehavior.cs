@@ -6,10 +6,10 @@
 
     public sealed class Erc20TransferCommitsSubscriptionManagerBehavior : IErc20TransferCommitsSubscriptionManagerBehavior
     {
-        private readonly IErc20TransferCommitsSubscriptionRepository _subscriptions;
+        private readonly IErc20SubscriptionRepository<IERc20TransferCommits> _subscriptions;
 
         public Erc20TransferCommitsSubscriptionManagerBehavior(
-            IErc20TransferCommitsSubscriptionRepository subscriptions)
+            IErc20SubscriptionRepository<IERc20TransferCommits> subscriptions)
         {
             _subscriptions = subscriptions;
         }
