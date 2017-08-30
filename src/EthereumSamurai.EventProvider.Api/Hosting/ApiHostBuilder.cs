@@ -5,6 +5,8 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
+    using Options;
 
 
     public sealed class ApiHostBuilder : IApiHostBuilder
@@ -14,8 +16,8 @@
 
 
         public ApiHostBuilder(
-            IConfigurationRoot configuration,
-            ILifetimeScope     parentScope)
+            IConfigurationRoot   configuration,
+            ILifetimeScope       parentScope)
         {
             _configuration = configuration;
             _parentScope   = parentScope;
@@ -34,9 +36,16 @@
 
             webhostBuilder.UseSetting("applicationName", "EthereumSamurai.EventProvider.Api");
 
-            var webhost = webhostBuilder.Build();
-
-            return new ApiHost(webhost);
+            var host = _configuration.GetValue<string>("Api:Host");
+            if (!string.IsNullOrEmpty(host))
+            {
+                webhostBuilder.UseUrls(host);
+            }
+            
+            return new ApiHost
+            (
+                webhost: webhostBuilder.Build()
+            );
         }
     }
 }

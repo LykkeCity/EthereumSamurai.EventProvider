@@ -2,6 +2,9 @@
 {
     public class ApiOptions
     {
-        
+        public ApiOptions()
+        {
+
+        }
     }
 }

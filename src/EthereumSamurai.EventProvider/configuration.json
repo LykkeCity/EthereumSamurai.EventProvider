@@ -5,7 +5,7 @@
     "RabbitMQ":  "" 
   },
   "Api": {
-
+    "Host": "http://localhost:5000"
   },
   "Service": {
     "Actors": {
