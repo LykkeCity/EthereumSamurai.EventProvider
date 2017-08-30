@@ -1,6 +1,7 @@
 ﻿namespace EthereumSamurai.EventProvider.Api.Controllers
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using Service.Actors.Proxies;
     using Microsoft.AspNetCore.Mvc;
     using Models;
@@ -35,7 +36,7 @@
                 exchange:     request.Exchange,
                 routingKey:   request.RoutingKey,
                 replayNumber: request.ReplayId,
-                assetHolder:  request.AssetHolder
+                assetHolder:  request.AssetHolder.ToLowerInvariant()
             ));
 
             return Ok();
@@ -55,8 +56,8 @@
             (
                 exchange:    subscription.Exchange,
                 routingKey:  subscription.RoutingKey,
-                assetHolder: subscription.AssetHolder,
-                contracts:   subscription.Contracts
+                assetHolder: subscription.AssetHolder.ToLowerInvariant(),
+                contracts:   subscription.Contracts.Select(x => x.ToLowerInvariant())
             ));
 
             return Ok();
@@ -69,8 +70,8 @@
             (
                 exchange:    subscription.Exchange,
                 routingKey:  subscription.RoutingKey,
-                assetHolder: subscription.AssetHolder,
-                contracts:   subscription.Contracts
+                assetHolder: subscription.AssetHolder.ToLowerInvariant(),
+                contracts:   subscription.Contracts.Select(x => x.ToLowerInvariant())
             ));
             
             return Ok();

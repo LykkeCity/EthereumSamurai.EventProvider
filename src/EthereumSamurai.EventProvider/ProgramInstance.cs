@@ -10,9 +10,9 @@
     {
         private static readonly TimeSpan ShutdownTimeout = TimeSpan.FromSeconds(90);
         
-        private readonly ICoreHostBuilder    _coreHostBuilder;
-        private readonly EventWaitHandle     _shutdownCompleted;
-        private readonly EventWaitHandle     _shutdownStarted;
+        private readonly ICoreHostBuilder _coreHostBuilder;
+        private readonly EventWaitHandle  _shutdownCompleted;
+        private readonly EventWaitHandle  _shutdownStarted;
 
         private bool _exceptionCaught;
         private bool _signalProcessed;
@@ -52,7 +52,7 @@
                 //// Processing Ctrl-Break or SIGQUIT
                 else
                 {
-                    //// Process will not terminate in debug mode of Visual Studio,
+                    //// Process will not terminated in debug mode of Visual Studio,
                     //// but, if process started from console, it terminates successfully.
 
                     Console.WriteLine("Termination signal received. Application will be terminated.");

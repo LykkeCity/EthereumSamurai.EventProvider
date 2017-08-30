@@ -1,5 +1,6 @@
 ﻿namespace EthereumSamurai.EventProvider.Core.Hosting
 {
+    using System;
     using System.Threading.Tasks;
     using Api.Hosting;
     using Service.Hosting;
@@ -15,15 +16,15 @@
             IApiHost     apiHost,
             IServiceHost serviceHost)
         {
-            _apiHost     = apiHost;
-            _serviceHost = serviceHost;
+            _apiHost     = apiHost     ?? throw new ArgumentNullException(nameof(apiHost));
+            _serviceHost = serviceHost ?? throw new ArgumentNullException(nameof(serviceHost));
         }
 
 
         public void Dispose()
         {
-            _apiHost?.Dispose();
-            _serviceHost?.Dispose();
+            _apiHost.Dispose();
+            _serviceHost.Dispose();
         }
         
         public void Start()
