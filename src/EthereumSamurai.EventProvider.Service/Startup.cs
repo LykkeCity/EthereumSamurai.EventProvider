@@ -19,6 +19,7 @@
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddMemoryCache()
                 .AddOptions()
                 .AddRepositories()
                 .AddActors();

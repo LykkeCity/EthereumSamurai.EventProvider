@@ -9,13 +9,13 @@
 
     public sealed class IndexerNotificationsListenerActor : ReceiveActor
     {
-        private readonly IIndexerNotificationListenerBehavior _behavior;
+        private readonly IIndexerNotificationsListenerBehavior _behavior;
         private readonly ICanTell                             _erc20BalanceChangesObserver;
         private readonly ICanTell                             _erc20TransferCommitsObserver;
 
 
         public IndexerNotificationsListenerActor(
-            IIndexerNotificationListenerBehavior behavior)
+            IIndexerNotificationsListenerBehavior behavior)
         {
             _behavior                     = behavior;
             _erc20BalanceChangesObserver  = Context.ActorSelection(ActorPaths.Erc20BalanceChangesObserver);

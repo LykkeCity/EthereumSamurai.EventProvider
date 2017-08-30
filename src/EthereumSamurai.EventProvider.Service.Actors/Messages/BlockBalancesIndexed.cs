@@ -1,11 +1,11 @@
-﻿namespace EthereumSamurai.EventProvider.Service.Messages
+﻿namespace EthereumSamurai.EventProvider.Service.Actors.Messages
 {
     using Newtonsoft.Json;
 
-    public sealed class BlockIndexed
+    public sealed class BlockBalancesIndexed
     {
         [JsonConstructor]
-        public BlockIndexed(ulong blockNumber)
+        public BlockBalancesIndexed(ulong blockNumber)
         {
             BlockNumber = blockNumber;
         }

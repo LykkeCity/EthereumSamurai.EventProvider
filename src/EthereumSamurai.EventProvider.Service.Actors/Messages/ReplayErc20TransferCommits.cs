@@ -1,10 +1,8 @@
-﻿namespace EthereumSamurai.EventProvider.Service.Messages
+﻿namespace EthereumSamurai.EventProvider.Service.Actors.Messages
 {
     using System.Collections.Generic;
     using System.Collections.Immutable;
     using System.Linq;
-
-
 
     public sealed class ReplayErc20TransferCommits
     {

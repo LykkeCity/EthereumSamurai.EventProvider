@@ -1,4 +1,4 @@
-﻿namespace EthereumSamurai.EventProvider.Service.Messages
+﻿namespace EthereumSamurai.EventProvider.Service.Actors.Messages
 {
     using Akka.Routing;
     using Notifications;

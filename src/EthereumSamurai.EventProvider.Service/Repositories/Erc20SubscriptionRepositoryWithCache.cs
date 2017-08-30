@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using Microsoft.Extensions.Caching.Memory;
-
+    using Subscriptions;
 
 
     public class Erc20SubscriptionRepositoryWithCache<T> : IErc20SubscriptionRepository<T>
-        where T : IErc20SubscriptionType
+        where T : IErc20Subscription
     {
         private readonly IMemoryCache                    _cache;
         private readonly TimeSpan                        _cacheDuration;

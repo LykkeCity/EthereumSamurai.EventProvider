@@ -20,7 +20,6 @@
   <ItemGroup>
     <ProjectReference Include="..\EthereumSamurai.EventProvider.Notifications\EthereumSamurai.EventProvider.Notifications.csproj" />
     <ProjectReference Include="..\EthereumSamurai.EventProvider.Service.Actors\EthereumSamurai.EventProvider.Service.Actors.csproj" />
-    <ProjectReference Include="..\EthereumSamurai.EventProvider.Service.Messages\EthereumSamurai.EventProvider.Service.Messages.csproj" />
   </ItemGroup>
 
 </Project>

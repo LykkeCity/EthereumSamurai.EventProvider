@@ -9,14 +9,17 @@
     using Utils;
 
 
+    using ISubscriptionRepository = Repositories.IErc20SubscriptionRepository<Repositories.Subscriptions.IErc20TransferCommitsSubscription>;
+
+
     public class Erc20TransferCommitsObserverBehavior : IErc20TransferCommitsObserverBehavior
     {
-        private readonly IErc20TransferHistoryRepository                     _transfers;
-        private readonly IErc20SubscriptionRepository<IERc20TransferCommits> _subscriptions;
+        private readonly ISubscriptionRepository         _subscriptions;
+        private readonly IErc20TransferHistoryRepository _transfers;
 
         public Erc20TransferCommitsObserverBehavior(
-            IErc20TransferHistoryRepository                     transfers,
-            IErc20SubscriptionRepository<IERc20TransferCommits> subscriptions)
+            ISubscriptionRepository         subscriptions,
+            IErc20TransferHistoryRepository transfers)
         {
             _transfers     = transfers;
             _subscriptions = subscriptions;

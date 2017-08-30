@@ -2,14 +2,17 @@
 {
     using System;
     using Messages;
-    using Repositories;
+
+
+    using ISubscriptionRepository = Repositories.IErc20SubscriptionRepository<Repositories.Subscriptions.IErc20TransferCommitsSubscription>;
+
 
     public sealed class Erc20TransferCommitsSubscriptionManagerBehavior : IErc20TransferCommitsSubscriptionManagerBehavior
     {
-        private readonly IErc20SubscriptionRepository<IERc20TransferCommits> _subscriptions;
+        private readonly ISubscriptionRepository _subscriptions;
 
         public Erc20TransferCommitsSubscriptionManagerBehavior(
-            IErc20SubscriptionRepository<IERc20TransferCommits> subscriptions)
+            ISubscriptionRepository subscriptions)
         {
             _subscriptions = subscriptions;
         }

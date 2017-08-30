@@ -1,8 +1,6 @@
-﻿using System;
-using EthereumSamurai.EventProvider.Service.Messages;
-
-namespace EthereumSamurai.EventProvider.Service.Actors.Behaviors
+﻿namespace EthereumSamurai.EventProvider.Service.Actors.Behaviors
 {
+    using System;
     using Messages;
 
     public interface IErc20BalanceChangesSubscriptionManagerBehavior

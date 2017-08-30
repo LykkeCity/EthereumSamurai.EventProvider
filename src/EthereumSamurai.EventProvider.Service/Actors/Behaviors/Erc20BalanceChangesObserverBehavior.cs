@@ -9,16 +9,18 @@
     using Utils;
 
 
+    using ISubscriptionRepository = Repositories.IErc20SubscriptionRepository<Repositories.Subscriptions.IErc20BalanceChangesSubscription>;
+
 
     public sealed class Erc20BalanceChangesObserverBehavior : IErc20BalanceChangesObserverBehavior
     {
-        private readonly IErc20BalanceRepository                            _balances;
-        private readonly IErc20SubscriptionRepository<IErc20BalanceChanges> _subscriptions;
+        private readonly IErc20BalanceRepository _balances;
+        private readonly ISubscriptionRepository _subscriptions;
 
 
         public Erc20BalanceChangesObserverBehavior(
-            IErc20BalanceRepository                            balances,
-            IErc20SubscriptionRepository<IErc20BalanceChanges> subscriptions)
+            IErc20BalanceRepository balances,
+            ISubscriptionRepository subscriptions)
         {
             _balances      = balances;
             _subscriptions = subscriptions;
@@ -52,7 +54,7 @@
                     balance:            balance.Balance,
                     blockNumber:        balance.BlockNumber,
                     contractAddress:    balance.ContractAddress,
-                    replayId:       default(int?)
+                    replayId:           default(int?)
                 );
 
                 var balanceSubscribers = _subscriptions.GetSubscribers

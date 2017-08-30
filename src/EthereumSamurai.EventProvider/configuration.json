@@ -1,14 +1,31 @@
 ﻿{
   "ConnectionStrings": {
-    "LykkeSettings": ""
+    "LykkeSettings": "",
+    "MongoDb": "",
+    "RabbitMQ":  "" 
   },
   "Api": {
 
   },
   "Service": {
+    "Actors": {
+      "IndexerNotificationsListener": {
+        "NotificationsQueue": "EthereumSamuraiNotifications"
+      }
+    },
     "Host": {
-      "NumberOfErc20TransfersObservers": 1,
-      "NumberOfSubscribersNotifiers": 1 
+      "NumberOfErc20BalanceChangesReplayManagers": 1,
+      "NumberOfErc20BalanceChangesSubscriptionManagers": 1,
+      "NumberOfErc20TransferCommitsObservers": 1,
+      "NumberOfErc20TransferCommitsReplayManagers": 1,
+      "NumberOfErc20TransferCommitsSubscriptionManagers": 1,
+      "NumberOfSubscribersNotifiers": 1
+    },
+    "Repositories": {
+      "Erc20SubscriptionRepository": {
+        "CacheDuration": 900,
+        "UseCache": true
+      }
     }
   } 
 }

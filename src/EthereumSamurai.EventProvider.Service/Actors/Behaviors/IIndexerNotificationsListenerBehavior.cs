@@ -1,11 +1,9 @@
-﻿using System;
-using EthereumSamurai.EventProvider.Service.Messages;
-
-namespace EthereumSamurai.EventProvider.Service.Actors.Behaviors
+﻿namespace EthereumSamurai.EventProvider.Service.Actors.Behaviors
 {
     using Messages;
+    using System;
 
-    public interface IIndexerNotificationListenerBehavior
+    public interface IIndexerNotificationsListenerBehavior
     {
         void Process(IndexerNotificationReceived message, Action<BlockBalancesIndexed> notifyAboutIndexedBlockBalancesAction, Action<BlockIndexed> notifyAboutIndexedBlockAction);
 

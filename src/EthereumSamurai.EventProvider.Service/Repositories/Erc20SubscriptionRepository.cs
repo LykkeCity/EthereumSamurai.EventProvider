@@ -4,9 +4,12 @@
     using System.Linq;
     using Entities;
     using MongoDB.Driver;
+    using Subscriptions;
+
+
 
     public class Erc20SubscriptionRepository<T> : IErc20SubscriptionRepository<T>
-        where T : IErc20SubscriptionType
+        where T : IErc20Subscription
     {
         private const char Delimiter = '|';
 

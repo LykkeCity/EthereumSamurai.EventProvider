@@ -3,14 +3,17 @@
     using System;
     using System.Linq;
     using Messages;
-    using Repositories;
+
+
+    using ISubscriptionRepository = Repositories.IErc20SubscriptionRepository<Repositories.Subscriptions.IErc20BalanceChangesSubscription>;
+
 
     public sealed class Erc20BalanceChangesSubscriptionManagerBehavior : IErc20BalanceChangesSubscriptionManagerBehavior
     {
-        private readonly IErc20SubscriptionRepository<IErc20BalanceChanges> _subscriptions;
+        private readonly ISubscriptionRepository _subscriptions;
 
         public Erc20BalanceChangesSubscriptionManagerBehavior(
-            IErc20SubscriptionRepository<IErc20BalanceChanges> subscriptions)
+            ISubscriptionRepository subscriptions)
         {
             _subscriptions = subscriptions;
         }

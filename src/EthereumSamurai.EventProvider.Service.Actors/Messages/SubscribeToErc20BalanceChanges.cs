@@ -1,19 +1,17 @@
-﻿namespace EthereumSamurai.EventProvider.Service.Messages
+﻿namespace EthereumSamurai.EventProvider.Service.Actors.Messages
 {
     using System.Collections.Generic;
     using System.Collections.Immutable;
 
-    public class UnsubscribeFromErc20TransferCommits
+    public class SubscribeToErc20BalanceChanges
     {
-        public UnsubscribeFromErc20TransferCommits(string exchange, string routingKey, string assetHolder, IEnumerable<string> contracts)
+        public SubscribeToErc20BalanceChanges(string exchange, string routingKey, string assetHolder, IEnumerable<string> contracts)
         {
             AssetHolder = assetHolder;
             Contracts   = contracts.ToImmutableArray();
             Exchange    = exchange;
             RoutingKey  = routingKey;
         }
-
-
 
         public string AssetHolder { get; }
 

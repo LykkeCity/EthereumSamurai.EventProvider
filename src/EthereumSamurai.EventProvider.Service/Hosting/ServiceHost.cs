@@ -88,7 +88,7 @@
             CreateActor<Erc20TransferCommitsObserverActor>
             (
                 metadata:     ActorPaths.Erc20TransferCommitsObserver,
-                routerConfig: new SmallestMailboxPool(_options.NumberOfErc20TransfersObservers)
+                routerConfig: new SmallestMailboxPool(_options.NumberOfErc20TransferCommitsObservers)
             );
         }
     }

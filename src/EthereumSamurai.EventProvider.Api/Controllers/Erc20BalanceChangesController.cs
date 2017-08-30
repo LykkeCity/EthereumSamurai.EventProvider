@@ -1,10 +1,9 @@
 ﻿namespace EthereumSamurai.EventProvider.Api.Controllers
 {
     using Service.Actors.Proxies;
-    using Service.Messages;
     using Microsoft.AspNetCore.Mvc;
     using Models;
-
+    using Service.Actors.Messages;
 
 
     [Route("api/[controller]")]

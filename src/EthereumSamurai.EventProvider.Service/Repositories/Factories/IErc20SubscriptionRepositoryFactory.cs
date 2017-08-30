@@ -1,11 +1,10 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Repositories.Factories
 {
-    using System;
+    using Subscriptions;
 
     public interface IErc20SubscriptionRepositoryFactory
     {
-        IErc20SubscriptionRepository GetRepository(string collectionName);
-
-        IErc20SubscriptionRepository GetRepositoryWithCache(string collectionName, TimeSpan cacheDuration);
+        IErc20SubscriptionRepository<T> GetRepository<T>(string collectionName)
+            where T : IErc20Subscription;
     }
 }

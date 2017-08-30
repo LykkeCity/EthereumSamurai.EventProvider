@@ -5,20 +5,27 @@
     using System.Text;
     using Messages;
     using Newtonsoft.Json.Linq;
+    using Options;
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
 
-    public class IndexerNotificationListenerBehavior : IIndexerNotificationListenerBehavior
-    {
-        private const string ConsumerTag = "IndexerNotificationListener";
 
-        private readonly IModel _channel;
-        
-        public IndexerNotificationListenerBehavior(
-            IModel channel)
+    public class IndexerNotificationsesListenerBehavior : IIndexerNotificationsListenerBehavior
+    {
+        private const string ConsumerTag = "IndexerNotificationsListener";
+
+        private readonly IModel                             _channel;
+        private readonly IndexerNotificationListenerOptions _options;
+
+
+        public IndexerNotificationsesListenerBehavior(
+            IModel                             channel,
+            IndexerNotificationListenerOptions options)
         {
             _channel = channel;
+            _options = options;
         }
+
 
         public void Process(
             IndexerNotificationReceived message,
@@ -56,7 +63,6 @@
             }
         }
         
-
         public void StartListening(Action<IndexerNotificationReceived> handleIndexerNotificationAction)
         {
             var consumer = new EventingBasicConsumer(_channel);
@@ -68,13 +74,13 @@
                 ));
             };
 
-            //_channel.BasicConsume
-            //( 
-            //    consumer:    consumer, 
-            //    queue:       _configuration.IndexerNotificationsQueue,
-            //    autoAck:     true,
-            //    consumerTag: ConsumerTag
-            //);
+            _channel.BasicConsume
+            ( 
+                consumer:    consumer, 
+                queue:       _options.NotificationsQueue,
+                autoAck:     true,
+                consumerTag: ConsumerTag
+            );
         }
 
         public void StopListening()
