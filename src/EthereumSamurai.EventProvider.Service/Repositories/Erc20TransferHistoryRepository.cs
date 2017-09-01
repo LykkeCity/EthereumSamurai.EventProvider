@@ -23,13 +23,14 @@
 
         public IEnumerable<Erc20TransferHistoryEntity> Get(Erc20TransferHistoriesQuery query)
         {
-            // Keep in mind, that currently AutoRest does not generate unsigned number types
-
             const int pageSize = 100;
-            var pageNumber = 0;
+            var pageNumber     = 0;
 
             while (true)
             {
+                //// Keep in mind, that currently (2017-09-01) AutoRest does not generate unsigned number types.
+                //// So, unfortunately, we should make explicit casts.
+
                 var transfersResponse = _api.ApiErc20TransferHistoryGetErc20TransfersPost
                 (
                     request: new GetErc20TransferHistoryRequest
@@ -49,7 +50,8 @@
                         BlockHash        = x.BlockHash,
                         BlockNumber      = (ulong) x.BlockNumber,
                         BlockTimestamp   = (ulong) x.BlockTimestamp,
-                        ContractAddress  = x.ContractAddress,
+                        ContractAddress  = x.Contract,
+                        //// 'from' is a reserved keyword in C#, and AutoRest does not make difference between 'from' and 'From"
                         From             = x.FromProperty,
                         LogIndex         = (uint) x.LogIndex,
                         To               = x.To,

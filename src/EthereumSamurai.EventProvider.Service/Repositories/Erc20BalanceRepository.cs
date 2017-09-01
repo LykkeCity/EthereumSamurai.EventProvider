@@ -28,12 +28,15 @@
 
             while(true)
             {
+                //// Keep in mind, that currently (2017-09-01) AutoRest does not generate unsigned number types.
+                //// So, unfortunately, we should make explicit casts.
+
                 var balancesResponse = _api.ApiErc20BalanceGetErc20BalancePost
                 (
                     request: new GetErc20BalanceRequest
                     {
                         AssetHolder = query.AssetHolder,
-                        BlockNumber = (long?) query.BlockNumber, // AutoRest does not generate ulongs
+                        BlockNumber = (long?) query.BlockNumber,
                         Contracts   = query.Contracts
                     },
                     start: pageIndex * pageSize,
@@ -46,7 +49,7 @@
                     {
                         AssetHolderAddress = x.Address,
                         Balance            = x.Amount,
-                        BlockNumber        = (ulong) x.BlockNumber, // AutoRest does not generate ulongs
+                        BlockNumber        = (ulong) x.BlockNumber,
                         ContractAddress    = x.Contract
                     }).ToList();
                     

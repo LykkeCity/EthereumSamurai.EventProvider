@@ -572,6 +572,7 @@
       }
     },
     "Erc20TransferHistoryResponse": {
+      "required": [ "blockNumber", "blockTimestamp", "logIndex", "transactionIndex" ],
       "type": "object",
       "properties": {
         "blockHash": { "type": "string" },
@@ -583,7 +584,7 @@
           "format": "int64",
           "type": "integer"
         },
-        "contractAddress": { "type": "string" },
+        "contract": { "type": "string" },
         "from": { "type": "string" },
         "logIndex": {
           "format": "int32",
