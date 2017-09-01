@@ -2,12 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
-    using Api.Hosting;
     using Hosting;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
-    using Service.Hosting;
+    using Service.Hosting.Interfaces;
 
 
     [TestClass]
@@ -16,7 +17,7 @@
         [TestMethod]
         public void Dispose__ApiHostAndServiceHostDisposed()
         {
-            var apiHost             = new Mock<IApiHost>();
+            var apiHost             = new Mock<IWebHost>();
             var apiHostDisposed     = false;
             var serviceHost         = new Mock<IServiceHost>();
             var serviceHostDisposed = false;
@@ -40,14 +41,14 @@
         [TestMethod]
         public void Start__ServiceHostStartedBeforeApiHost()
         {
-            var apiHost     = new Mock<IApiHost>();
+            var apiHost     = new Mock<IWebHost>();
             var serviceHost = new Mock<IServiceHost>();
 
             var startSequence = new List<Type>(2);
 
             apiHost.Setup(x => x.Start()).Callback(() =>
             {
-                startSequence.Add(typeof(IApiHost));
+                startSequence.Add(typeof(IWebHost));
             });
 
             serviceHost.Setup(x => x.Start()).Callback(() =>
@@ -58,20 +59,20 @@
             (new CoreHost(apiHost.Object, serviceHost.Object)).Start();
 
             Assert.AreEqual(typeof(IServiceHost), startSequence[0]);
-            Assert.AreEqual(typeof(IApiHost),     startSequence[1]);
+            Assert.AreEqual(typeof(IWebHost),     startSequence[1]);
         }
 
         [TestMethod]
         public void StopAsync__ApiHostShouldBeStoppedBeforeServiceHost()
         {
-            var apiHost     = new Mock<IApiHost>();
+            var apiHost     = new Mock<IWebHost>();
             var serviceHost = new Mock<IServiceHost>();
 
             var stopSequence = new List<Type>(2);
 
             apiHost
-                .Setup(x => x.StopAsync())
-                .Callback(() => { stopSequence.Add(typeof(IApiHost)); })
+                .Setup(x => x.StopAsync(CancellationToken.None))
+                .Callback(() => { stopSequence.Add(typeof(IWebHost)); })
                 .Returns(Task.CompletedTask);
 
             serviceHost
@@ -81,7 +82,7 @@
 
             (new CoreHost(apiHost.Object, serviceHost.Object)).StopAsync().Wait();
 
-            Assert.AreEqual(typeof(IApiHost),     stopSequence[0]);
+            Assert.AreEqual(typeof(IWebHost),     stopSequence[0]);
             Assert.AreEqual(typeof(IServiceHost), stopSequence[1]);
         }
     }

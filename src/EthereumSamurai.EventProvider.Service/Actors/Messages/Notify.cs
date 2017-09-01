@@ -1,9 +1,11 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Actors.Messages
 {
     using Akka.Routing;
-    using Notifications;
+    using Notifications.Interfaces;
 
-    public sealed class Notify : IConsistentHashable
+    
+
+    internal sealed class Notify : IConsistentHashable
     {
         internal Notify(string exchange, string routingKey, INotification notification)
         {

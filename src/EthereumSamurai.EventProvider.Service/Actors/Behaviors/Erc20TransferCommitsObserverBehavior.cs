@@ -2,17 +2,18 @@
 {
     using System;
     using System.Collections.Generic;
+    using Extensions;
+    using Interfaces;
     using Messages;
     using Notifications;
-    using Repositories;
+    using Repositories.Interfaces;
     using Repositories.Queries;
-    using Utils;
+    
+    using ISubscriptionRepository = Repositories.Interfaces.IErc20SubscriptionRepository<Repositories.Entities.Erc20TransferCommitsSubscriptionEntity>;
 
 
-    using ISubscriptionRepository = Repositories.IErc20SubscriptionRepository<Repositories.Subscriptions.IErc20TransferCommitsSubscription>;
 
-
-    public class Erc20TransferCommitsObserverBehavior : IErc20TransferCommitsObserverBehavior
+    internal class Erc20TransferCommitsObserverBehavior : IErc20TransferCommitsObserverBehavior
     {
         private readonly ISubscriptionRepository         _subscriptions;
         private readonly IErc20TransferHistoryRepository _transfers;

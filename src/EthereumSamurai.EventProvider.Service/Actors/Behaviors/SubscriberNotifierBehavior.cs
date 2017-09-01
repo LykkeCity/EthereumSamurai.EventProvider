@@ -1,13 +1,14 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Actors.Behaviors
 {
     using System.Text;
+    using Interfaces;
     using Messages;
     using Newtonsoft.Json;
     using RabbitMQ.Client;
 
 
     
-    public sealed class SubscriberNotifierBehavior : ISubscriberNotifierBehavior
+    internal sealed class SubscriberNotifierBehavior : ISubscriberNotifierBehavior
     {
         private readonly IModel _channel;
 

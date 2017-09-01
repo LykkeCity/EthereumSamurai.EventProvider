@@ -1,74 +1,76 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Repositories
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using ApiClient;
+    using ApiClient.Models;
     using Entities;
-    using MongoDB.Driver;
+    using Interfaces;
     using Queries;
 
 
 
     public class Erc20BalanceRepository : IErc20BalanceRepository
     {
-        private const string BalanceCollectionName = "Erc20BalanceCollection";
+        private readonly IEthereumSamuraiApi _api;
 
-        private readonly IMongoCollection<Erc20BalanceEntity>        _balances;
-        private readonly FilterDefinitionBuilder<Erc20BalanceEntity> _filterBuilder;
-
-
-
-        public Erc20BalanceRepository(IMongoDatabase database)
+        public Erc20BalanceRepository(IEthereumSamuraiApi api)
         {
-            _balances      = database.GetCollection<Erc20BalanceEntity>(BalanceCollectionName);
-            _filterBuilder = Builders<Erc20BalanceEntity>.Filter;
-
-            CreateIndexes();
+            _api = api;
         }
-
-        private void CreateIndexes()
-        {
-            var indexKeys = Builders<Erc20BalanceEntity>.IndexKeys;
-
-            _balances.Indexes.CreateMany(new []
-            {
-                new CreateIndexModel<Erc20BalanceEntity>
-                (
-                    indexKeys.Combine
-                    (
-                        indexKeys.Ascending(x => x.AssetHolderAddress),
-                        indexKeys.Ascending(x => x.ContractAddress)
-                    )
-                ),
-                new CreateIndexModel<Erc20BalanceEntity>
-                (
-                    indexKeys.Ascending(x => x.BlockNumber)
-                )
-            });
-        }
-
 
         
         public IEnumerable<Erc20BalanceEntity> Get(Erc20BalancesQuery query)
         {
-            var filter = _filterBuilder.Empty;
+            const int pageSize = 100;
+            var pageIndex      = 0;
 
-            if (!string.IsNullOrEmpty(query.AssetHolder))
+            while(true)
             {
-                filter &= _filterBuilder.Eq(x => x.AssetHolderAddress, query.AssetHolder);
-            }
-            
-            if (query.Contracts != null && query.Contracts.Length > 0)
-            {
-                filter &= _filterBuilder.In(x => x.ContractAddress, query.Contracts);
-            }
-            
-            if (query.BlockNumber.HasValue)
-            {
-                filter &= _filterBuilder.Eq(x => x.BlockNumber, query.BlockNumber.Value);
-            }
+                var balancesResponse = _api.ApiErc20BalanceGetErc20BalancePost
+                (
+                    request: new GetErc20BalanceRequest
+                    {
+                        AssetHolder = query.AssetHolder,
+                        BlockNumber = (long?) query.BlockNumber, // AutoRest does not generate ulongs
+                        Contracts   = query.Contracts
+                    },
+                    start: pageIndex * pageSize,
+                    count: pageSize
+                );
 
-            return _balances
-                .Find(filter)
-                .ToEnumerable();
+                if (balancesResponse is IEnumerable<Erc20BalanceResponse> balancesPage)
+                {
+                    var balances = balancesPage.Select(x => new Erc20BalanceEntity
+                    {
+                        AssetHolderAddress = x.Address,
+                        Balance            = x.Amount,
+                        BlockNumber        = (ulong) x.BlockNumber, // AutoRest does not generate ulongs
+                        ContractAddress    = x.Contract
+                    }).ToList();
+                    
+                    foreach (var balance in balances)
+                    {
+                        yield return balance;
+                    }
+
+                    if (balances.Count < pageSize)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        pageIndex++;
+                    }
+                }
+                else
+                {
+                    // TODO: Add custom exception
+
+                    throw new Exception("EthereumSamurai API returned invalid response.");
+                }
+            }
         }
     }
 }

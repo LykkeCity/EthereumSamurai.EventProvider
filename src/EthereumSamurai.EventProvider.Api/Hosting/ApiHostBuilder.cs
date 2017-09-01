@@ -1,12 +1,11 @@
 ﻿namespace EthereumSamurai.EventProvider.Api.Hosting
 {
     using Autofac;
+    using Interfaces;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Options;
-    using Options;
 
 
     public sealed class ApiHostBuilder : IApiHostBuilder
@@ -16,15 +15,15 @@
 
 
         public ApiHostBuilder(
-            IConfigurationRoot   configuration,
-            ILifetimeScope       parentScope)
+            IConfigurationRoot configuration,
+            ILifetimeScope     parentScope)
         {
             _configuration = configuration;
             _parentScope   = parentScope;
         }
 
         
-        public IApiHost Build()
+        public IWebHost Build()
         {
             var startup        = new Startup(_configuration, _parentScope);
             var webhostBuilder = WebHost.CreateDefaultBuilder();
@@ -41,11 +40,8 @@
             {
                 webhostBuilder.UseUrls(host);
             }
-            
-            return new ApiHost
-            (
-                webhost: webhostBuilder.Build()
-            );
+
+            return webhostBuilder.Build();
         }
     }
 }

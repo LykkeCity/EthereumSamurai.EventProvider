@@ -1,5 +1,7 @@
 ﻿namespace EthereumSamurai.EventProvider.Notifications
 {
+    using Interfaces;
+
     /// <summary>
     ///    Represents the ERC20 balance change cancellation notification.
     /// </summary>

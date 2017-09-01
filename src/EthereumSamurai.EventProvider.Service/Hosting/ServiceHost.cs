@@ -5,6 +5,7 @@
     using Akka.Actor;
     using Akka.DI.Core;
     using Akka.Routing;
+    using Interfaces;
     using Microsoft.Extensions.Options;
     using Options;
 

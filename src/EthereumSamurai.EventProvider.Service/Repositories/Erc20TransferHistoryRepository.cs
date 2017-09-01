@@ -1,107 +1,84 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Repositories
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using ApiClient;
+    using ApiClient.Models;
     using Entities;
-    using MongoDB.Driver;
+    using Interfaces;
     using Queries;
 
 
 
     public class Erc20TransferHistoryRepository : IErc20TransferHistoryRepository
     {
-        private const string BalanceCollectionName = "Erc20TransferHistoryCollection";
+        private readonly IEthereumSamuraiApi _api;
 
-        private readonly IMongoCollection<Erc20TransferHistoryEntity>        _transfers;
-        private readonly FilterDefinitionBuilder<Erc20TransferHistoryEntity> _filterBuilder;
 
-        public Erc20TransferHistoryRepository(IMongoDatabase database)
+        public Erc20TransferHistoryRepository(IEthereumSamuraiApi api)
         {
-            _transfers     = database.GetCollection<Erc20TransferHistoryEntity>(BalanceCollectionName);
-            _filterBuilder = Builders<Erc20TransferHistoryEntity>.Filter;
-
-            CreateIndexes();
-        }
-
-
-        private void CreateIndexes()
-        {
-            var indexKeys = Builders<Erc20TransferHistoryEntity>.IndexKeys;
-
-            _transfers.Indexes.CreateMany(new[]
-            {
-                new CreateIndexModel<Erc20TransferHistoryEntity>
-                (
-                    indexKeys.Combine
-                    (
-                        indexKeys.Ascending(x => x.BlockNumber),
-                        indexKeys.Ascending(x => x.From),
-                        indexKeys.Ascending(x => x.To),
-                        indexKeys.Ascending(x => x.ContractAddress)
-                    )
-                ),
-                new CreateIndexModel<Erc20TransferHistoryEntity>
-                (
-                    indexKeys.Combine
-                    (
-                        indexKeys.Ascending(x => x.From),
-                        indexKeys.Ascending(x => x.To),
-                        indexKeys.Ascending(x => x.ContractAddress)
-                    )
-                ),
-                new CreateIndexModel<Erc20TransferHistoryEntity>
-                (
-                    indexKeys.Combine
-                    (
-                        indexKeys.Ascending(x => x.BlockNumber),
-                        indexKeys.Ascending(x => x.ContractAddress)
-                    )
-                ),
-                new CreateIndexModel<Erc20TransferHistoryEntity>
-                (
-                    indexKeys.Combine
-                    (
-                        indexKeys.Ascending(x => x.ContractAddress)
-                    )
-                )
-            });
+            _api = api;
         }
 
         public IEnumerable<Erc20TransferHistoryEntity> Get(Erc20TransferHistoriesQuery query)
         {
-            var filter = _filterBuilder.Empty;
+            // Keep in mind, that currently AutoRest does not generate unsigned number types
 
-            if (query.BlockNumber.HasValue)
-            {
-                filter &= _filterBuilder.Eq(x => x.BlockNumber, query.BlockNumber.Value);
-            }
-            else
-            {
-                if (query.FromBlockNumber.HasValue)
-                {
-                    filter &= _filterBuilder.Gte(x => x.BlockNumber, query.FromBlockNumber.Value);
-                }
+            const int pageSize = 100;
+            var pageNumber = 0;
 
-                if (query.ToBlockNumber.HasValue)
-                {
-                    filter &= _filterBuilder.Lte(x => x.BlockNumber, query.ToBlockNumber.Value);
-                }
-            }
-
-            if (query.AssetHolders != null && query.AssetHolders.Length > 0)
+            while (true)
             {
-                filter &= _filterBuilder.Or
+                var transfersResponse = _api.ApiErc20TransferHistoryGetErc20TransfersPost
                 (
-                    _filterBuilder.In(x => x.From, query.AssetHolders),
-                    _filterBuilder.In(x => x.To,   query.AssetHolders)
+                    request: new GetErc20TransferHistoryRequest
+                    {
+                        AssetHolder = query.AssetHolder,
+                        BlockNumber = (long?) query.BlockNumber,
+                        Contracts   = query.Contracts
+                    },
+                    start: pageNumber * pageSize,
+                    count: pageSize
                 );
-            }
 
-            if (query.Contracts != null && query.Contracts.Length > 0)
-            {
-                filter &= _filterBuilder.In(x => x.ContractAddress, query.Contracts);
+                if (transfersResponse is IEnumerable<Erc20TransferHistoryResponse> transfersPage)
+                {
+                    var transfers = transfersPage.Select(x => new Erc20TransferHistoryEntity
+                    {
+                        BlockHash        = x.BlockHash,
+                        BlockNumber      = (ulong) x.BlockNumber,
+                        BlockTimestamp   = (ulong) x.BlockTimestamp,
+                        ContractAddress  = x.ContractAddress,
+                        From             = x.FromProperty,
+                        LogIndex         = (uint) x.LogIndex,
+                        To               = x.To,
+                        TransactionHash  = x.TransactionHash,
+                        TransactionIndex = (uint) x.TransactionIndex,
+                        TransferAmount   = x.TransferAmount
+                    }).ToList();
+
+                    foreach (var transfer in transfers)
+                    {
+                        yield return transfer;
+                    }
+
+                    if (transfers.Count < pageSize)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        pageNumber++;
+                    }
+                }
+                else
+                {
+                    // TODO: Add custom exception
+
+                    throw new Exception("EthereumSamurai API returned invalid response.");
+                }
             }
-            
-            return _transfers.Find(filter).ToEnumerable();
         }
     }
 }

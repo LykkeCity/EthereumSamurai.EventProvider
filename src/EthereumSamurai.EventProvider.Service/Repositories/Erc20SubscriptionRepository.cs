@@ -2,19 +2,19 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Entities;
+    using Entities.Interfaces;
+    using Interfaces;
     using MongoDB.Driver;
-    using Subscriptions;
 
 
 
     public class Erc20SubscriptionRepository<T> : IErc20SubscriptionRepository<T>
-        where T : IErc20Subscription
+        where T : IErc20SubscriptionEntity, new()
     {
         private const char Delimiter = '|';
 
-        private readonly FilterDefinitionBuilder<Erc20SubscriptionEntity> _filterBuilder;
-        private readonly IMongoCollection<Erc20SubscriptionEntity>        _subscriptions;
+        private readonly FilterDefinitionBuilder<T> _filterBuilder;
+        private readonly IMongoCollection<T>        _subscriptions;
 
 
 
@@ -23,8 +23,8 @@
             IMongoDatabase database)
         {
             CollectionName = collectionName;
-            _filterBuilder = Builders<Erc20SubscriptionEntity>.Filter;
-            _subscriptions = database.GetCollection<Erc20SubscriptionEntity>(CollectionName);
+            _filterBuilder = Builders<T>.Filter;
+            _subscriptions = database.GetCollection<T>(CollectionName);
 
             CreateIndexes();
         }
@@ -40,26 +40,7 @@
             return GetSubscribers(filter);
         }
         
-        public IEnumerable<(string exchange, string routingKey)> GetSubscribers(string assetHolder, string contract)
-        {
-            var filter = _filterBuilder.Empty;
-
-            filter &= _filterBuilder.Or
-            (
-                _filterBuilder.Eq(x => x.AssetHolder, assetHolder),
-                _filterBuilder.Eq(x => x.AssetHolder, "*")
-            );
-
-            filter &= _filterBuilder.Or
-            (
-                _filterBuilder.Eq(x => x.Contract, contract),
-                _filterBuilder.Eq(x => x.Contract, "*")
-            );
-
-            return GetSubscribers(filter);
-        }
-
-        public IEnumerable<(string exchange, string routingKey)> GetSubscribers(string[] assetHolders, string contract)
+        public IEnumerable<(string exchange, string routingKey)> GetSubscribers(string contract, params string[] assetHolders)
         {
             var filter = _filterBuilder.Empty;
 
@@ -74,26 +55,11 @@
             return GetSubscribers(filter);
         }
 
-        public IEnumerable<(string exchange, string routingKey)> GetSubscribers(string assetHolder, string[] contracts)
-        {
-            var filter = _filterBuilder.Empty;
-
-            filter &= _filterBuilder.Or
-            (
-                _filterBuilder.Eq(x => x.AssetHolder, assetHolder),
-                _filterBuilder.Eq(x => x.AssetHolder, "*")
-            );
-
-            filter &= _filterBuilder.In(x => x.Contract, contracts);
-
-            return GetSubscribers(filter);
-        }
-
         public void Subscribe(string exchange, string routingKey, string assetHolder, string contract)
         {
             Unsubscribe(exchange, routingKey, assetHolder, contract);
 
-            _subscriptions.InsertOne(new Erc20SubscriptionEntity
+            _subscriptions.InsertOne(new T
             {
                 AssetHolder = assetHolder,
                 Contract    = contract,
@@ -126,11 +92,11 @@
         
         private void CreateIndexes()
         {
-            var indexKeys = Builders<Erc20SubscriptionEntity>.IndexKeys;
+            var indexKeys = Builders<T>.IndexKeys;
 
             _subscriptions.Indexes.CreateMany(new[]
             {
-                new CreateIndexModel<Erc20SubscriptionEntity>
+                new CreateIndexModel<T>
                 (
                     indexKeys.Combine
                     (
@@ -139,7 +105,7 @@
                         indexKeys.Ascending(x => x.Contract)
                     )
                 ),
-                new CreateIndexModel<Erc20SubscriptionEntity>
+                new CreateIndexModel<T>
                 (
                     indexKeys.Combine
                     (
@@ -147,7 +113,7 @@
                         indexKeys.Ascending(x => x.Contract)
                     )
                 ),
-                new CreateIndexModel<Erc20SubscriptionEntity>
+                new CreateIndexModel<T>
                 (
                     indexKeys.Combine
                     (
@@ -158,7 +124,7 @@
             });
         }
 
-        private IEnumerable<(string exchange, string routingKey)> GetSubscribers(FilterDefinition<Erc20SubscriptionEntity> filter)
+        private IEnumerable<(string exchange, string routingKey)> GetSubscribers(FilterDefinition<T> filter)
         {
             return _subscriptions
                 .Distinct(x => x.Subscriber, filter)

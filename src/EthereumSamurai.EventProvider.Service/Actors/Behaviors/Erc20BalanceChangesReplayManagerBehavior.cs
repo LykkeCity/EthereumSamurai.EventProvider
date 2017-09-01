@@ -3,13 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Extensions;
+    using Interfaces;
     using Messages;
     using Notifications;
-    using Repositories;
+    using Repositories.Interfaces;
     using Repositories.Queries;
-    using Utils;
 
-    public sealed class Erc20BalanceChangesReplayManagerBehavior : IErc20BalanceChangesReplayManagerBehavior
+
+
+    internal sealed class Erc20BalanceChangesReplayManagerBehavior : IErc20BalanceChangesReplayManagerBehavior
     {
         private readonly IErc20BalanceRepository _balances;
 
@@ -38,7 +41,7 @@
                     balance:            balance.Balance,
                     blockNumber:        balance.BlockNumber,
                     contractAddress:    balance.ContractAddress,
-                    replayId:       message.ReplayNumber
+                    replayId:           message.ReplayId
                 );
 
                 notifications.EnqueueUnicast(changeNotification, message.Exchange, message.RoutingKey);
@@ -46,11 +49,11 @@
 
             // If it is replay, initiated with replay id, preparing replay end notification
 
-            if (message.ReplayNumber.HasValue)
+            if (message.ReplayId.HasValue)
             {
                 var replayEndNotification = new Erc20BalanceChangeReplayEndNotification
                 (
-                    replayNumber: message.ReplayNumber.Value
+                    replayId: message.ReplayId.Value
                 );
 
                 notifications.EnqueueUnicast(replayEndNotification, message.Exchange, message.RoutingKey);

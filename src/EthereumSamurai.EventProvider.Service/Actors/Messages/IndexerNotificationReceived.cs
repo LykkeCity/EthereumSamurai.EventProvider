@@ -3,7 +3,9 @@
     using System.Collections.Generic;
     using System.Collections.Immutable;
 
-    public sealed class IndexerNotificationReceived
+
+
+    internal sealed class IndexerNotificationReceived
     {
         internal IndexerNotificationReceived(IEnumerable<byte> notificationBody)
         {

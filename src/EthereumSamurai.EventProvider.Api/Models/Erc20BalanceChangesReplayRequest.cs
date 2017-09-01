@@ -1,6 +1,7 @@
 ﻿namespace EthereumSamurai.EventProvider.Api.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using Validation;
 
     /// <summary>
     ///    Erc20 balance changes replay request.
@@ -10,7 +11,7 @@
         /// <summary>
         ///    Get balances for this asset holder address.
         /// </summary>
-        [Required]
+        [Required, EthereumAddress]
         public string AssetHolder { get; set; }
 
         /// <summary>

@@ -1,8 +1,12 @@
 ﻿namespace EthereumSamurai.EventProvider.Core.Hosting
 {
     using Api.Hosting;
+    using Api.Hosting.Interfaces;
     using Autofac;
+    using Interfaces;
     using Service.Hosting;
+    using Service.Hosting.Interfaces;
+
 
     public class CoreHostBuilder : ICoreHostBuilder
     {

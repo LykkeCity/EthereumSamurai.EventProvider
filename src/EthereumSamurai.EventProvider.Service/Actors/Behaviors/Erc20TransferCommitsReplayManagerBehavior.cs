@@ -3,15 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Extensions;
+    using Interfaces;
     using Messages;
     using Notifications;
-    using Repositories;
+    using Repositories.Interfaces;
     using Repositories.Queries;
-    using Utils;
 
 
-
-    public sealed class Erc20TransferCommitsReplayManagerBehavior : IErc20TransferCommitsReplayManagerBehavior
+    internal sealed class Erc20TransferCommitsReplayManagerBehavior : IErc20TransferCommitsReplayManagerBehavior
     {
         private readonly IErc20TransferHistoryRepository _transfers;
 
@@ -26,8 +26,8 @@
             var notifications = new Queue<Notify>();
             var transfers     = _transfers.Get(new Erc20TransferHistoriesQuery
             {
-                AssetHolders = new[] { message.AssetHolder },
-                Contracts    = message.Contracts.ToArray()
+                AssetHolder = message.AssetHolder,
+                Contracts   = message.Contracts.ToArray()
             });
 
             // Preparing change notification for specified subscriber

@@ -4,11 +4,11 @@
     using Akka.Actor;
     using Akka.Configuration;
     using Autofac;
-    using Configuration;
+    using Extensions;
     using Microsoft.Extensions.Configuration;
 
 
-    public sealed class Startup
+    internal sealed class Startup
     {
         public void ConfigureServices(ContainerBuilder builder)
         {
@@ -30,6 +30,9 @@
         /// <returns>
         ///    Instance of the <see cref="Config"/> class.
         /// </returns>
+        /// <remarks>
+        ///    In most cases you will never change these settings after build.
+        /// </remarks>
         private static Config GetActorSystemConfig()
         {
             return ConfigurationFactory.FromResource
@@ -38,16 +41,19 @@
                 assembly:     Assembly.GetExecutingAssembly()
             );
         }
-
+        
         private static IConfigurationRoot GetApplicationConfig()
         {
             var builder = new ConfigurationBuilder();
 
             builder
-                .AddJsonFile("configuration.json",             optional: false)
-                .AddJsonFile("configuration.staging.json",     optional: true)
+                // Never place sensitive information in this file (in fact, it should only contain template with defaults)!
+                .AddJsonFile("configuration.json", optional: true)
+                // You should place sensitive information for development purposes here (this file is .gitignored).
                 .AddJsonFile("configuration.development.json", optional: true)
+                // You should place sensitive information for production purposes here...
                 .AddEnvironmentVariables()
+                // ...and here.
                 .AddLykkeSettings("LykkeSettings");
 
             return builder.Build();

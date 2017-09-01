@@ -1,9 +1,9 @@
 ﻿namespace EthereumSamurai.EventProvider.Service
 {
-    using Actors;
+    using Actors.Extensions;
+    using Extensions;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Options;
     using Repositories;
 
 

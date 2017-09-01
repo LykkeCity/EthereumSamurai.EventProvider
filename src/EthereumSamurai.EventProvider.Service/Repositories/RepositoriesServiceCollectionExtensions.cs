@@ -1,11 +1,13 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Repositories
 {
+    using Entities;
+    using Entities.Interfaces;
     using Factories;
+    using Factories.Interfaces;
+    using Interfaces;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using MongoDB.Driver;
-    using Options;
-    using Subscriptions;
 
 
     internal static class RepositoriesServiceCollectionExtensions
@@ -22,7 +24,7 @@
         }
 
         private static IServiceCollection AddErc20SubscriptionRepository<T>(this IServiceCollection services, string collectionName)
-            where T : IErc20Subscription
+            where T : IErc20SubscriptionEntity, new()
         {
             return services.AddSingleton(provider =>
             {
@@ -36,8 +38,8 @@
         {
             return services
                 .AddSingleton<IErc20SubscriptionRepositoryFactory, Erc20SubscriptionRepositoryFactory>()
-                .AddErc20SubscriptionRepository<IErc20BalanceChangesSubscription>("Erc20BalanceChanges")
-                .AddErc20SubscriptionRepository<IErc20TransferCommitsSubscription>("Erc20TransferCommits");
+                .AddErc20SubscriptionRepository<Erc20BalanceChangesSubscriptionEntity>("Erc20BalanceChanges")
+                .AddErc20SubscriptionRepository<Erc20TransferCommitsSubscriptionEntity>("Erc20TransferCommits");
         }
 
         private static IServiceCollection AddMongoDb(this IServiceCollection services)

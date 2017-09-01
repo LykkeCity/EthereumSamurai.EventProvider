@@ -6,8 +6,8 @@ namespace EthereumSamurai.EventProvider.Core.Tests
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using Configuration;
     using Exceptions;
+    using Extensions;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Configuration.Json;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

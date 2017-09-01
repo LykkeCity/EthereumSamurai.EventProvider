@@ -1,20 +1,20 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Actors
 {
     using Akka.Actor;
-    using Behaviors;
+    using Behaviors.Interfaces;
+    using Extensions;
     using Messages;
-    using Utils;
 
 
-
-    public sealed class Erc20BalanceChangesSubscribtionManagerActor : ReceiveActor
+    internal sealed class Erc20BalanceChangesSubscribtionManagerActor : ReceiveActor
     {
         private readonly IErc20BalanceChangesSubscriptionManagerBehavior _behavior;
         private readonly ICanTell                                        _replayManager;
 
 
 
-        public Erc20BalanceChangesSubscribtionManagerActor(IErc20BalanceChangesSubscriptionManagerBehavior behavior)
+        public Erc20BalanceChangesSubscribtionManagerActor(
+            IErc20BalanceChangesSubscriptionManagerBehavior behavior)
         {
             _behavior      = behavior;
             _replayManager = Context.ActorSelection(ActorPaths.Erc20BalanceChangesReplayManager);
@@ -25,6 +25,7 @@
             Receive<UnsubscribeFromErc20BalanceChanges>(
                 msg => Process(msg));
         }
+
 
         private void Process(SubscribeToErc20BalanceChanges message)
         {

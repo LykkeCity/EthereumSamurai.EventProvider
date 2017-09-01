@@ -1,13 +1,14 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Actors.Behaviors
 {
     using System;
+    using Interfaces;
     using Messages;
 
 
-    using ISubscriptionRepository = Repositories.IErc20SubscriptionRepository<Repositories.Subscriptions.IErc20TransferCommitsSubscription>;
+    using ISubscriptionRepository = Repositories.Interfaces.IErc20SubscriptionRepository<Repositories.Entities.Erc20TransferCommitsSubscriptionEntity>;
 
 
-    public sealed class Erc20TransferCommitsSubscriptionManagerBehavior : IErc20TransferCommitsSubscriptionManagerBehavior
+    internal sealed class Erc20TransferCommitsSubscriptionManagerBehavior : IErc20TransferCommitsSubscriptionManagerBehavior
     {
         private readonly ISubscriptionRepository _subscriptions;
 

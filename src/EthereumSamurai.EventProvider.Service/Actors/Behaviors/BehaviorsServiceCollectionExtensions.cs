@@ -1,6 +1,7 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Actors.Behaviors
 {
     using System;
+    using Interfaces;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using RabbitMQ.Client;

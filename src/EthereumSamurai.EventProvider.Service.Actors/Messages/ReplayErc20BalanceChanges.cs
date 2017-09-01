@@ -14,10 +14,10 @@
             RoutingKey  = routingKey;
         }
 
-        public ReplayErc20BalanceChanges(string exchange, string routingKey, int replayNumber, string assetHolder)
+        public ReplayErc20BalanceChanges(string exchange, string routingKey, int replayId, string assetHolder)
             : this(exchange, routingKey, assetHolder, Enumerable.Empty<string>())
         {
-            ReplayNumber = replayNumber;
+            ReplayId = replayId;
         }
 
 
@@ -27,7 +27,7 @@
 
         public string Exchange { get; }
 
-        public int? ReplayNumber { get; }
+        public int? ReplayId { get; }
 
         public string RoutingKey { get; }
     }

@@ -1,13 +1,12 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Actors
 {
     using Akka.Actor;
-    using Behaviors;
+    using Behaviors.Interfaces;
+    using Extensions;
     using Messages;
-    using Utils;
 
 
-
-    public sealed class IndexerNotificationsListenerActor : ReceiveActor
+    internal sealed class IndexerNotificationsListenerActor : ReceiveActor
     {
         private readonly IIndexerNotificationsListenerBehavior _behavior;
         private readonly ICanTell                             _erc20BalanceChangesObserver;

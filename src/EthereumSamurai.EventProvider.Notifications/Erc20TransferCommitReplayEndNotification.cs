@@ -1,5 +1,7 @@
 ﻿namespace EthereumSamurai.EventProvider.Notifications
 {
+    using Interfaces;
+
     public class Erc20TransferCommitReplayEndNotification : INotification
     {
         /// <summary>

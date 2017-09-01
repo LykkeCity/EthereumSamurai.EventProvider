@@ -1,11 +1,11 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Actors
 {
     using Akka.Actor;
-    using Behaviors;
+    using Behaviors.Interfaces;
     using Messages;
 
 
-    public sealed class Erc20BalanceChangesReplayManagerActor : ReceiveActor
+    internal sealed class Erc20BalanceChangesReplayManagerActor : ReceiveActor
     {
         private readonly IErc20BalanceChangesReplayManagerBehavior _behavior;
         private readonly ICanTell                                  _susbcribersNotifier;

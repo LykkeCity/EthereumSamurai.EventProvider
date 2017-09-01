@@ -3,9 +3,9 @@
     using System;
     using System.Runtime.Loader;
     using System.Threading;
-    using Core.Hosting;
+    using Core.Hosting.Interfaces;
 
-    
+
     internal sealed class ProgramInstance
     {
         private static readonly TimeSpan ShutdownTimeout = TimeSpan.FromSeconds(90);

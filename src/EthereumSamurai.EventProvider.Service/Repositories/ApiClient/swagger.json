@@ -1,0 +1,676 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "EthereumSamurai.Api"
+  },
+  "basePath": "/",
+  "paths": {
+    "/api/AddressHistory/{address}": {
+      "get": {
+        "tags": [ "AddressHistory" ],
+        "operationId": "ApiAddressHistoryByAddressGet",
+        "consumes": [],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "Address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "StartBlock",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "StopBlock",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "Count",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "Start",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/FilteredAddressHistoryResponse" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/Balance/getBalance/{address}": {
+      "get": {
+        "tags": [ "Balance" ],
+        "operationId": "ApiBalanceGetBalanceByAddressGet",
+        "consumes": [],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/BalanceResponse" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/Erc20Balance/getErc20Balance": {
+      "post": {
+        "tags": [ "Erc20Balance" ],
+        "operationId": "ApiErc20BalanceGetErc20BalancePost",
+        "consumes": [ "application/json-patch+json", "application/json", "text/json", "application/*+json" ],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "required": false,
+            "schema": { "$ref": "#/definitions/GetErc20BalanceRequest" }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Erc20BalanceResponse" }
+            }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/Erc20Balance/getErc20Balance/{address}": {
+      "post": {
+        "tags": [ "Erc20Balance" ],
+        "operationId": "ApiErc20BalanceGetErc20BalanceByAddressPost",
+        "consumes": [ "application/json-patch+json", "application/json", "text/json", "application/*+json" ],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "contracts",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Erc20BalanceResponse" }
+            }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/Erc20TransferHistory/getErc20Transfers": {
+      "post": {
+        "tags": [ "Erc20TransferHistory" ],
+        "operationId": "ApiErc20TransferHistoryGetErc20TransfersPost",
+        "consumes": [ "application/json-patch+json", "application/json", "text/json", "application/*+json" ],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "required": false,
+            "schema": { "$ref": "#/definitions/GetErc20TransferHistoryRequest" }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Erc20TransferHistoryResponse" }
+            }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/InternalMessages/txHash/{transactionHash}": {
+      "get": {
+        "tags": [ "InternalMessages" ],
+        "operationId": "ApiInternalMessagesTxHashByTransactionHashGet",
+        "consumes": [],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "transactionHash",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/FilteredInternalMessageResponse" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/InternalMessages/{address}": {
+      "get": {
+        "tags": [ "InternalMessages" ],
+        "operationId": "ApiInternalMessagesByAddressGet",
+        "consumes": [],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "Address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "StartBlock",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "StopBlock",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "Count",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "Start",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/FilteredInternalMessageResponse" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/System/isAlive": {
+      "get": {
+        "tags": [ "System" ],
+        "operationId": "ApiSystemIsAliveGet",
+        "consumes": [],
+        "produces": [],
+        "responses": { "200": { "description": "Success" } },
+        "deprecated": false
+      }
+    },
+    "/api/Transaction/txHash/{transactionHash}": {
+      "get": {
+        "tags": [ "Transaction" ],
+        "operationId": "ApiTransactionTxHashByTransactionHashGet",
+        "consumes": [],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "transactionHash",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/TransactionResponse" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/Transaction/{address}": {
+      "get": {
+        "tags": [ "Transaction" ],
+        "operationId": "ApiTransactionByAddressGet",
+        "consumes": [],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "Address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Count",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "Start",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/FilteredTransactionsResponse" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/Transaction/block/number/{blockNumber}": {
+      "get": {
+        "tags": [ "Transaction" ],
+        "operationId": "ApiTransactionBlockNumberByBlockNumberGet",
+        "consumes": [],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "blockNumber",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/FilteredTransactionsResponse" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/Transaction/block/hash/{blockHash}": {
+      "get": {
+        "tags": [ "Transaction" ],
+        "operationId": "ApiTransactionBlockHashByBlockHashGet",
+        "consumes": [],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "blockHash",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/FilteredTransactionsResponse" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": { "$ref": "#/definitions/ApiException" }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "FilteredAddressHistoryResponse": {
+      "type": "object",
+      "properties": {
+        "history": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/AddressHistoryResponse" }
+        }
+      }
+    },
+    "AddressHistoryResponse": {
+      "type": "object",
+      "properties": {
+        "blockNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "blockTimestamp": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "from": { "type": "string" },
+        "hasError": { "type": "boolean" },
+        "messageIndex": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "to": { "type": "string" },
+        "transactionHash": { "type": "string" },
+        "transactionIndex": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": { "type": "string" }
+      }
+    },
+    "ApiException": {
+      "type": "object",
+      "properties": { "error": { "$ref": "#/definitions/ApiError" } }
+    },
+    "ApiError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "format": "int32",
+          "enum": [ 0 ],
+          "type": "integer"
+        },
+        "message": { "type": "string" }
+      }
+    },
+    "BalanceResponse": {
+      "type": "object",
+      "properties": { "amount": { "type": "string" } }
+    },
+    "GetErc20BalanceRequest": {
+      "type": "object",
+      "properties": {
+        "assetHolder": { "type": "string" },
+        "blockNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "contracts": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "Erc20BalanceResponse": {
+      "required": [ "blockNumber" ],
+      "type": "object",
+      "properties": {
+        "address": { "type": "string" },
+        "amount": { "type": "string" },
+        "blockNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "contract": { "type": "string" }
+      }
+    },
+    "GetErc20TransferHistoryRequest": {
+      "type": "object",
+      "properties": {
+        "assetHolder": { "type": "string" },
+        "blockNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "contracts": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "Erc20TransferHistoryResponse": {
+      "type": "object",
+      "properties": {
+        "blockHash": { "type": "string" },
+        "blockNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "blockTimestamp": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "contractAddress": { "type": "string" },
+        "from": { "type": "string" },
+        "logIndex": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "to": { "type": "string" },
+        "transactionHash": { "type": "string" },
+        "transactionIndex": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "transferAmount": { "type": "string" }
+      }
+    },
+    "FilteredInternalMessageResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/InternalMessageResponse" }
+        }
+      }
+    },
+    "InternalMessageResponse": {
+      "type": "object",
+      "properties": {
+        "blockNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "blockTimeStamp": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "depth": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fromAddress": { "type": "string" },
+        "messageIndex": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "toAddress": { "type": "string" },
+        "transactionHash": { "type": "string" },
+        "type": { "type": "string" },
+        "value": { "type": "string" }
+      }
+    },
+    "TransactionResponse": {
+      "type": "object",
+      "properties": {
+        "blockHash": { "type": "string" },
+        "blockNumber": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "blockTimestamp": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contractAddress": { "type": "string" },
+        "from": { "type": "string" },
+        "gas": { "type": "string" },
+        "gasPrice": { "type": "string" },
+        "gasUsed": { "type": "string" },
+        "hasError": { "type": "boolean" },
+        "input": { "type": "string" },
+        "nonce": { "type": "string" },
+        "to": { "type": "string" },
+        "transactionHash": { "type": "string" },
+        "transactionIndex": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": { "type": "string" }
+      }
+    },
+    "FilteredTransactionsResponse": {
+      "type": "object",
+      "properties": {
+        "transactions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/TransactionResponse" }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {}
+}

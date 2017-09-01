@@ -2,14 +2,10 @@
 {
     public sealed class Erc20TransferHistoriesQuery
     {
+        public string AssetHolder { get; set; }
+
         public ulong? BlockNumber { get; set; }
 
         public string[] Contracts { get; set; }
-        
-        public ulong? FromBlockNumber { get; set; }
-
-        public string[] AssetHolders { get; set; }
-        
-        public ulong? ToBlockNumber { get; set; }
     }
 }

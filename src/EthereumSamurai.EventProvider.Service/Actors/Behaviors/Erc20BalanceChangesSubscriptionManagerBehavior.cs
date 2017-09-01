@@ -2,13 +2,14 @@
 {
     using System;
     using System.Linq;
+    using Interfaces;
     using Messages;
+    
+    using ISubscriptionRepository = Repositories.Interfaces.IErc20SubscriptionRepository<Repositories.Entities.Erc20BalanceChangesSubscriptionEntity>;
 
 
-    using ISubscriptionRepository = Repositories.IErc20SubscriptionRepository<Repositories.Subscriptions.IErc20BalanceChangesSubscription>;
 
-
-    public sealed class Erc20BalanceChangesSubscriptionManagerBehavior : IErc20BalanceChangesSubscriptionManagerBehavior
+    internal sealed class Erc20BalanceChangesSubscriptionManagerBehavior : IErc20BalanceChangesSubscriptionManagerBehavior
     {
         private readonly ISubscriptionRepository _subscriptions;
 

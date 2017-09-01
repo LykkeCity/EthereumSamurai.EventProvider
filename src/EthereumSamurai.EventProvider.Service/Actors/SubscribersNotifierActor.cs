@@ -3,11 +3,11 @@
     using System;
     using Akka.Actor;
     using Akka.Event;
-    using Behaviors;
+    using Behaviors.Interfaces;
     using Messages;
 
 
-    public sealed class SubscribersNotifierActor : ReceiveActor
+    internal sealed class SubscribersNotifierActor : ReceiveActor
     {
 
         private readonly ISubscriberNotifierBehavior _behavior;

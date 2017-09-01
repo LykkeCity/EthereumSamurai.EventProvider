@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Text;
+    using Interfaces;
     using Messages;
     using Newtonsoft.Json.Linq;
     using Options;
@@ -10,7 +11,7 @@
     using RabbitMQ.Client.Events;
 
 
-    public class IndexerNotificationsesListenerBehavior : IIndexerNotificationsListenerBehavior
+    internal class IndexerNotificationsesListenerBehavior : IIndexerNotificationsListenerBehavior
     {
         private const string ConsumerTag = "IndexerNotificationsListener";
 

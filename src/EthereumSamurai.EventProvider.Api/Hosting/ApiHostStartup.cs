@@ -8,7 +8,7 @@
     using Microsoft.Extensions.DependencyInjection;
 
 
-    public abstract class ApiHostStartup : IStartup
+    internal abstract class ApiHostStartup : IStartup
     {
         private readonly ILifetimeScope _parentScope;
 

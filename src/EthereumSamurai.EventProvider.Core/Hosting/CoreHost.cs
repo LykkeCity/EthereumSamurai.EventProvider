@@ -2,18 +2,19 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Api.Hosting;
-    using Service.Hosting;
+    using Interfaces;
+    using Microsoft.AspNetCore.Hosting;
+    using Service.Hosting.Interfaces;
 
 
     public class CoreHost : ICoreHost
     {
-        private readonly IApiHost     _apiHost;
+        private readonly IWebHost     _apiHost;
         private readonly IServiceHost _serviceHost;
 
 
         public CoreHost(
-            IApiHost     apiHost,
+            IWebHost     apiHost,
             IServiceHost serviceHost)
         {
             _apiHost     = apiHost     ?? throw new ArgumentNullException(nameof(apiHost));

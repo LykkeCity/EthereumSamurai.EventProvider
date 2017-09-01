@@ -1,5 +1,7 @@
 ﻿namespace EthereumSamurai.EventProvider.Notifications
 {
+    using Interfaces;
+
     /// <summary>
     ///    Represents the completion of ERC20 balance changes trplay notification.
     /// </summary>
@@ -9,9 +11,9 @@
         ///    Initializes a new instance of the <see cref="Erc20BalanceChangeReplayEndNotification" /> class.
         /// </summary>
         public Erc20BalanceChangeReplayEndNotification(
-            int replayNumber)
+            int replayId)
         {
-            ReplayNumber = replayNumber;
+            ReplayId = replayId;
         }
 
 
@@ -19,6 +21,6 @@
         public string Type
             => "Erc20BalanceChangeReplayEnd";
 
-        public int ReplayNumber { get; }
+        public int ReplayId { get; }
     }
 }

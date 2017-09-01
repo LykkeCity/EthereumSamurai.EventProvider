@@ -1,5 +1,7 @@
 ﻿namespace EthereumSamurai.EventProvider.Notifications
 {
+    using Interfaces;
+
     /// <summary>
     ///    Represents the ERC20 transfer commit cancellation notification.
     /// </summary>

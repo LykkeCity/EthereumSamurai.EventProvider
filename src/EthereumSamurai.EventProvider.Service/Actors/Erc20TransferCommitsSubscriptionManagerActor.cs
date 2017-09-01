@@ -1,13 +1,12 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Actors
 {
     using Akka.Actor;
-    using Behaviors;
+    using Behaviors.Interfaces;
+    using Extensions;
     using Messages;
-    using Utils;
 
 
-
-    public sealed class Erc20TransferCommitsSubscriptionManagerActor : ReceiveActor
+    internal sealed class Erc20TransferCommitsSubscriptionManagerActor : ReceiveActor
     {
         private readonly IErc20TransferCommitsSubscriptionManagerBehavior _behavior;
         private readonly ICanTell                                         _replayManager;

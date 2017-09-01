@@ -2,12 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Entities.Interfaces;
+    using Interfaces;
     using Microsoft.Extensions.Caching.Memory;
-    using Subscriptions;
+
 
 
     public class Erc20SubscriptionRepositoryWithCache<T> : IErc20SubscriptionRepository<T>
-        where T : IErc20Subscription
+        where T : IErc20SubscriptionEntity
     {
         private readonly IMemoryCache                    _cache;
         private readonly TimeSpan                        _cacheDuration;
@@ -38,23 +41,20 @@
             );
         }
 
-        public IEnumerable<(string exchange, string routingKey)> GetSubscribers(string assetHolder, string contract)
+        public IEnumerable<(string exchange, string routingKey)> GetSubscribers(string contract, params string[] assetHolders)
         {
-            return _cache.GetOrCreate
-            (
-                GetCacheKeyForSubscription(assetHolder, contract),
-                x => ConfigureCacheEntry(x, _repository.GetSubscribers(assetHolder, contract))
-            );
-        }
+            // TODO: Imrove this caching strategy
 
-        public IEnumerable<(string exchange, string routingKey)> GetSubscribers(string assetHolder, string[] contracts)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<(string exchange, string routingKey)> GetSubscribers(string[] assetHolders, string contract)
-        {
-            throw new NotImplementedException();
+            return assetHolders
+                .SelectMany(x =>
+                {
+                    return _cache.GetOrCreate
+                    (
+                        GetCacheKeyForSubscription(x, contract),
+                        y => ConfigureCacheEntry(y, _repository.GetSubscribers(x, contract))
+                    );
+                })
+                .Distinct();
         }
 
         public void Subscribe(string exchange, string routingKey, string assetHolder, string contract)
@@ -71,10 +71,10 @@
             InvalidateCache(assetHolder, contract);
         }
         
-        private T ConfigureCacheEntry<T>(ICacheEntry entry, T value)
+        private IEnumerable<(string exchange, string routingKey)> ConfigureCacheEntry(ICacheEntry entry, IEnumerable<(string exchange, string routingKey)> value)
         {
             entry.AbsoluteExpirationRelativeToNow = _cacheDuration;
-            entry.Value = value;
+            entry.Value                           = value;
 
             return value;
         }

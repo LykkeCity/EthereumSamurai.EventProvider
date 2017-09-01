@@ -2,17 +2,18 @@
 {
     using System;
     using System.Collections.Generic;
+    using Extensions;
+    using Interfaces;
     using Messages;
     using Notifications;
-    using Repositories;
+    using Repositories.Interfaces;
     using Repositories.Queries;
-    using Utils;
+
+    using ISubscriptionRepository = Repositories.Interfaces.IErc20SubscriptionRepository<Repositories.Entities.Erc20BalanceChangesSubscriptionEntity>;
 
 
-    using ISubscriptionRepository = Repositories.IErc20SubscriptionRepository<Repositories.Subscriptions.IErc20BalanceChangesSubscription>;
 
-
-    public sealed class Erc20BalanceChangesObserverBehavior : IErc20BalanceChangesObserverBehavior
+    internal sealed class Erc20BalanceChangesObserverBehavior : IErc20BalanceChangesObserverBehavior
     {
         private readonly IErc20BalanceRepository _balances;
         private readonly ISubscriptionRepository _subscriptions;
