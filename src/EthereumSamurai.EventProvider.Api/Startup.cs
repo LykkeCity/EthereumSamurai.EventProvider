@@ -16,6 +16,7 @@
     {
         private readonly IConfigurationRoot _configuration;
 
+
         public Startup(
             IConfigurationRoot configuration,
             ILifetimeScope     parentScope) : base(parentScope)

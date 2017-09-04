@@ -1,7 +1,7 @@
 ﻿namespace EthereumSamurai.EventProvider
 {
     using Core.Hosting;
-
+    
 
     internal sealed class Program
     {
@@ -9,6 +9,7 @@
         {
             BuildInstance().Run();
         }
+
 
         private static ProgramInstance BuildInstance()
         {

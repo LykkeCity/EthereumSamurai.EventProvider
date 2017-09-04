@@ -6,8 +6,7 @@
     using Interfaces;
     using MongoDB.Driver;
 
-
-
+    
     public class Erc20SubscriptionRepository<T> : IErc20SubscriptionRepository<T>
         where T : IErc20SubscriptionEntity, new()
     {
@@ -16,8 +15,7 @@
         private readonly FilterDefinitionBuilder<T> _filterBuilder;
         private readonly IMongoCollection<T>        _subscriptions;
 
-
-
+        
         public Erc20SubscriptionRepository(
             string         collectionName,
             IMongoDatabase database)

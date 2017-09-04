@@ -3,6 +3,7 @@
     using System;
     using System.Runtime.Serialization;
 
+
     public class LykkeSettingsException : Exception
     {
         public LykkeSettingsException()

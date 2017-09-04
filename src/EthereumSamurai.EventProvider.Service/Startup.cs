@@ -11,10 +11,12 @@
     {
         private readonly IConfigurationRoot _configuration;
 
+
         public Startup(IConfigurationRoot configuration)
         {
             _configuration = configuration;
         }
+
 
         public void ConfigureServices(IServiceCollection services)
         {

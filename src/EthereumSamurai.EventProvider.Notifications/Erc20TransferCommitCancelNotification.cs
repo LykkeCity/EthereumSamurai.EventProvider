@@ -2,6 +2,7 @@
 {
     using Interfaces;
 
+
     /// <summary>
     ///    Represents the ERC20 transfer commit cancellation notification.
     /// </summary>
@@ -15,6 +16,7 @@
         {
             BlockNumber = blockNumber;
         }
+
 
         /// <inheritdoc />
         public string Type

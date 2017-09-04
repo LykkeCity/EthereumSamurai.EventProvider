@@ -5,7 +5,7 @@
     using System.Threading;
     using Core.Hosting.Interfaces;
 
-
+    
     internal sealed class ProgramInstance
     {
         private static readonly TimeSpan ShutdownTimeout = TimeSpan.FromSeconds(90);
@@ -16,8 +16,8 @@
 
         private bool _exceptionCaught;
         private bool _signalProcessed;
+    
 
-        
         public ProgramInstance(ICoreHostBuilder coreHostBuilder)
         {
             _coreHostBuilder   = coreHostBuilder;
@@ -27,6 +27,7 @@
             RegisterSignalHandlers();
         }
         
+
         private void RegisterSignalHandlers()
         {
             AssemblyLoadContext.Default.Unloading += ctx =>
@@ -40,21 +41,19 @@
 
             Console.CancelKeyPress += (sender, eventArgs) =>
             {
+                //// Process will not terminate in debug mode of Visual Studio,
+                //// but, if process started from console, it terminates successfully.
+
                 _signalProcessed = true;
 
                 //// Processing Ctrl-C or SIGINT 
                 if (eventArgs.SpecialKey == ConsoleSpecialKey.ControlC)
                 {
                     ShutdownGracefully();
-
-                    eventArgs.Cancel = true;
                 }
                 //// Processing Ctrl-Break or SIGQUIT
                 else
                 {
-                    //// Process will not terminated in debug mode of Visual Studio,
-                    //// but, if process started from console, it terminates successfully.
-
                     Console.WriteLine("Termination signal received. Application will be terminated.");
                 }
             };

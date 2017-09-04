@@ -8,8 +8,7 @@
     using Entities;
     using Interfaces;
     using Queries;
-
-
+    
 
     public class Erc20TransferHistoryRepository : IErc20TransferHistoryRepository
     {
@@ -20,6 +19,7 @@
         {
             _api = api;
         }
+
 
         public IEnumerable<Erc20TransferHistoryEntity> Get(Erc20TransferHistoriesQuery query)
         {

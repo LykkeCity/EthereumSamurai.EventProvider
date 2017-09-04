@@ -24,6 +24,7 @@
             );
         }
 
+
         /// <summary>
         ///    Loads the akka.net actor system configuration from the embedded resource.
         /// </summary>

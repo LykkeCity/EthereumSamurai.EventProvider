@@ -14,6 +14,7 @@
         private readonly IErc20BalanceChangesReplayManagerProxy       _replayManager;
         private readonly IErc20BalanceChangesSubscribtionManagerProxy _subscribtionManager;
 
+
         public Erc20BalanceChangesController(
             IErc20BalanceChangesReplayManagerProxy       replayManager,
             IErc20BalanceChangesSubscribtionManagerProxy subscribtionManager)
@@ -21,6 +22,7 @@
             _replayManager       = replayManager;
             _subscribtionManager = subscribtionManager;
         }
+
 
         /// <summary>
         ///    Adds specified replay request to the queue.

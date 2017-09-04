@@ -1,5 +1,7 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Repositories
 {
+    using System;
+    using ApiClient;
     using Entities;
     using Entities.Interfaces;
     using Factories;
@@ -16,11 +18,24 @@
         {
             services
                 .AddMongoDb()
+                .AddEthereumSamuraiApi()
                 .AddErc20SubscriptionRepositories()
                 .AddSingleton<IErc20BalanceRepository, Erc20BalanceRepository>()
                 .AddSingleton<IErc20TransferHistoryRepository, Erc20TransferHistoryRepository>();
             
             return services;
+        }
+
+        private static IServiceCollection AddEthereumSamuraiApi(this IServiceCollection services)
+        {
+            return services.AddSingleton<IEthereumSamuraiApi>(provider =>
+            {
+                var configuration = provider.GetService<IConfigurationRoot>();
+                var apiHostString = configuration.GetConnectionString("EthereumSamuraiApi");
+                var apiHost       = new Uri(apiHostString, UriKind.Absolute);
+
+                return new EthereumSamuraiApi(apiHost);
+            });
         }
 
         private static IServiceCollection AddErc20SubscriptionRepository<T>(this IServiceCollection services, string collectionName)

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+
     public class EthereumAddressListAttribute : EthereumAddressAttribute
     {
         public override bool IsValid(object value)

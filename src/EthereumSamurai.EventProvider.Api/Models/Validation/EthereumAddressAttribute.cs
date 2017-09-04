@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
 
+
     public class EthereumAddressAttribute : ValidationAttribute
     {
         public override bool IsValid(object value)

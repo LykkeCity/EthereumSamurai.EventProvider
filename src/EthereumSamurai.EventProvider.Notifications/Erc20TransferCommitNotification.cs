@@ -2,6 +2,7 @@
 {
     using Interfaces;
 
+
     public class Erc20TransferCommitNotification : INotification
     {
         /// <summary>

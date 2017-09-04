@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using Validation;
 
+
     public class Erc20BalanceChangesSubscription
     {
         [Required]

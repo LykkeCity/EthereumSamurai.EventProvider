@@ -24,8 +24,7 @@
             ReplayId           = replayId;
         }
 
-
-
+        
         /// <inheritdoc />
         public string Type
             => "Erc20BalanceChange";

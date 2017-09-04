@@ -1,8 +1,9 @@
 ﻿{
   "ConnectionStrings": {
+    "EthereumSamuraiApi": "",
     "LykkeSettings": "",
     "MongoDb": "",
-    "RabbitMQ":  "" 
+    "RabbitMQ": ""
   },
   "Api": {
     "Host": "http://localhost:5000"
@@ -10,7 +11,8 @@
   "Service": {
     "Actors": {
       "IndexerNotificationsListener": {
-        "NotificationsQueue": "EthereumSamuraiNotifications"
+        "NotificationsExchange": "lykke.ethereum.indexer",
+        "NotificationsQueue": "event-provider-indexer-notifications"
       }
     },
     "Host": {

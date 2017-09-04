@@ -2,6 +2,7 @@
 {
     using Newtonsoft.Json;
 
+
     public sealed class BlockBalancesIndexed
     {
         [JsonConstructor]

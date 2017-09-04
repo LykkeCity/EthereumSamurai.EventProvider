@@ -34,7 +34,7 @@
             {
                 props = props.WithRouter(routerConfig);
             }
-
+            
             _system.ActorOf(props, metadata.Name);
         }
 
@@ -56,7 +56,7 @@
 
         public async Task StopAsync()
         {
-            throw new System.NotImplementedException();
+
         }
 
         private void StartErc20BalancesSubsystem()
@@ -65,13 +65,38 @@
             (
                 metadata: ActorPaths.Erc20BalanceChangesObserver
             );
+
+            CreateActor<Erc20BalanceChangesReplayManagerActor>
+            (
+                metadata:     ActorPaths.Erc20BalanceChangesReplayManager,
+                routerConfig: new SmallestMailboxPool(_options.NumberOfErc20TransferCommitsReplayManagers)
+            );
+
+            CreateActor<Erc20BalanceChangesSubscribtionManagerActor>
+            (
+                metadata:     ActorPaths.Erc20BalanceChangesSubscriptionManager,
+                routerConfig: new SmallestMailboxPool(_options.NumberOfErc20BalanceChangesSubscriptionManagers)
+            );
         }
 
         private void StartErc20TransfersSubsystem()
         {
-            CreateActor<IndexerNotificationsListenerActor>
+            CreateActor<Erc20TransferCommitsObserverActor>
             (
-                metadata: ActorPaths.IndexerNotificationsListener
+                metadata:     ActorPaths.Erc20TransferCommitsObserver,
+                routerConfig: new SmallestMailboxPool(_options.NumberOfErc20TransferCommitsObservers)
+            );
+
+            CreateActor<Erc20TransferCommitsReplayManagerActor>
+            (
+                metadata:     ActorPaths.Erc20TransferCommitsReplayManager,
+                routerConfig: new SmallestMailboxPool(_options.NumberOfErc20BalanceChangesReplayManagers)
+            );
+
+            CreateActor<Erc20BalanceChangesSubscribtionManagerActor>
+            (
+                metadata:     ActorPaths.Erc20TransferCommitsSubscriptionManager,
+                routerConfig: new SmallestMailboxPool(_options.NumberOfErc20TransferCommitsSubscriptionManagers)
             );
         }
 
@@ -83,13 +108,12 @@
                 routerConfig: new ConsistentHashingPool(_options.NumberOfSubscribersNotifiers)
             );
         }
-
+        
         private void StartIndexerNotificationsListener()
         {
-            CreateActor<Erc20TransferCommitsObserverActor>
+            CreateActor<IndexerNotificationsListenerActor>
             (
-                metadata:     ActorPaths.Erc20TransferCommitsObserver,
-                routerConfig: new SmallestMailboxPool(_options.NumberOfErc20TransferCommitsObservers)
+                metadata: ActorPaths.IndexerNotificationsListener
             );
         }
     }

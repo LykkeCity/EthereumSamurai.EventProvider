@@ -7,7 +7,6 @@
     using Microsoft.Extensions.Configuration;
     
 
-
     /// <summary>
     ///    Extension methods for adding <see cref="Microsoft.Extensions.Configuration.Json.JsonConfigurationProvider"/> with configuration from Lykke's settings server.
     /// </summary>

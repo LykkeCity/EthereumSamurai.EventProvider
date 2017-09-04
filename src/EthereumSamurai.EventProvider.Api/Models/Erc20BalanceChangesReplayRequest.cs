@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using Validation;
 
+
     /// <summary>
     ///    Erc20 balance changes replay request.
     /// </summary>

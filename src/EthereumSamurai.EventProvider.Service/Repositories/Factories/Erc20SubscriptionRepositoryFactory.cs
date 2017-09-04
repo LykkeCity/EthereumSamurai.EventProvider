@@ -31,13 +31,19 @@
         public IErc20SubscriptionRepository<T> GetRepository<T>(string collectionName)
             where T : IErc20SubscriptionEntity, new()
         {
-            if (_options.UseCache)
+            return GetRepository<T>(collectionName, _options.UseCache);
+        }
+
+        private IErc20SubscriptionRepository<T> GetRepository<T>(string collectionName, bool useCache)
+            where T : IErc20SubscriptionEntity, new()
+        {
+            if (useCache)
             {
                 return new Erc20SubscriptionRepositoryWithCache<T>
                 (
                     cache:         _cache,
                     cacheDuration: TimeSpan.FromSeconds(_options.CacheDuration),
-                    repository:    GetRepository<T>(collectionName)
+                    repository:    GetRepository<T>(collectionName, false)
                 );
             }
             else

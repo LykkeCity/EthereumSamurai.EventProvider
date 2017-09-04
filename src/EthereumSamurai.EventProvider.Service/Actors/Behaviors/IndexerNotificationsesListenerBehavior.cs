@@ -5,6 +5,7 @@
     using System.Text;
     using Interfaces;
     using Messages;
+    using Microsoft.Extensions.Options;
     using Newtonsoft.Json.Linq;
     using Options;
     using RabbitMQ.Client;
@@ -20,38 +21,41 @@
 
 
         public IndexerNotificationsesListenerBehavior(
-            IModel                             channel,
-            IndexerNotificationListenerOptions options)
+            IModel channel,
+            IOptions<IndexerNotificationListenerOptions> options)
         {
             _channel = channel;
-            _options = options;
+            _options = options.Value;
         }
 
 
         public void Process(
-            IndexerNotificationReceived message,
+            IndexerNotificationReceived  message,
             Action<BlockBalancesIndexed> notifyAboutIndexedBlockBalancesAction,
-            Action<BlockIndexed> notifyAboutIndexedBlockAction)
+            Action<BlockIndexed>         notifyAboutIndexedBlockAction)
         {
             var notificationJson = Encoding.UTF8.GetString(message.NotificationBody.ToArray());
             var notification     = JObject.Parse(notificationJson);
-
-            if (notification.TryGetValue("$type", out var typeToken))
+            
+            if (notification.TryGetValue("IndexingMessageType",  out var typeToken) && 
+                notification.TryGetValue("BlockNumber",          out var blockNumberToken)  &&
+                ulong.TryParse(blockNumberToken.Value<string>(), out var blockNumber)
+             )
             {
                 var type = typeToken.Value<string>();
                 
                 switch (type.ToLowerInvariant())
                 {
-                    case "blockbalancesindexed":
+                    case "block":
                         notifyAboutIndexedBlockBalancesAction
                         (
-                            notification.ToObject<BlockBalancesIndexed>()
+                            new BlockBalancesIndexed(blockNumber)
                         );
                         return;
-                    case "blockindexed":
+                    case "ercbalances":
                         notifyAboutIndexedBlockAction
                         (
-                            notification.ToObject<BlockIndexed>()
+                            new BlockIndexed(blockNumber)
                         );
                         return;
                     default:
@@ -60,12 +64,26 @@
             }
             else
             {
-                throw new FormatException("Indexer notification doesn't contain $type filed.");
+                throw new FormatException("RabbitIndexingMessage either not contains IndexingMessageType, or BlockNumber in proper format.");
             }
         }
         
         public void StartListening(Action<IndexerNotificationReceived> handleIndexerNotificationAction)
         {
+            _channel.QueueDeclare
+            (
+                queue:      _options.NotificationsQueue,
+                durable:    true,
+                autoDelete: false
+            );
+
+            _channel.QueueBind
+            (
+                queue:      _options.NotificationsQueue,
+                exchange:   _options.NotificationsExchange,
+                routingKey: string.Empty
+            );
+
             var consumer = new EventingBasicConsumer(_channel);
             
             consumer.Received += (sender, args) =>
@@ -74,7 +92,7 @@
                     notificationBody: args.Body
                 ));
             };
-
+            
             _channel.BasicConsume
             ( 
                 consumer:    consumer, 

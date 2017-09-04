@@ -7,8 +7,7 @@
     using Interfaces;
     using Microsoft.Extensions.Caching.Memory;
 
-
-
+    
     public class Erc20SubscriptionRepositoryWithCache<T> : IErc20SubscriptionRepository<T>
         where T : IErc20SubscriptionEntity
     {
@@ -30,8 +29,7 @@
         public string CollectionName
             => _repository.CollectionName;
 
-
-
+        
         public IEnumerable<(string exchange, string routingKey)> GetSubscribers()
         {
             return _cache.GetOrCreate

@@ -8,8 +8,7 @@
     using Entities;
     using Interfaces;
     using Queries;
-
-
+    
 
     public class Erc20BalanceRepository : IErc20BalanceRepository
     {
