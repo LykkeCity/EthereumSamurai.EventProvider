@@ -68,6 +68,8 @@
                     contract:     transfer.ContractAddress
                 );
                 
+                // TODO: Ensure, that subscribers exist
+
                 notifications.EnqueueMulticastRange(commitNotification, subscribers);
             }
 

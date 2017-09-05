@@ -12,7 +12,7 @@
     "Actors": {
       "IndexerNotificationsListener": {
         "NotificationsExchange": "lykke.ethereum.indexer",
-        "NotificationsQueue": "event-provider-indexer-notifications"
+        "NotificationsQueue": "lykke-ethereum-event-provider-indexer-notifications"
       }
     },
     "Host": {

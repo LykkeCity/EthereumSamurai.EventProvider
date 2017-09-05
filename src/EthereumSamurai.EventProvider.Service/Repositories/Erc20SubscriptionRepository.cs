@@ -1,7 +1,6 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Repositories
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Entities.Interfaces;
     using Interfaces;
     using MongoDB.Driver;
@@ -124,11 +123,20 @@
 
         private IEnumerable<(string exchange, string routingKey)> GetSubscribers(FilterDefinition<T> filter)
         {
-            return _subscriptions
-                .Distinct(x => x.Subscriber, filter)
-                .ToEnumerable()
-                .Select(x => x.Split(Delimiter))
-                .Select(x => (x[0], x[1]));
+            //// If you will use .ToEnumerable() method of IAsyncCursor, and return result, you will fail with an exception.
+            //// See https://stackoverflow.com/questions/29682371/how-is-an-iasynccursor-used-for-iteration-with-the-mongodb-c-sharp-driver for more details.
+            using (var cursor = _subscriptions.Distinct(x => x.Subscriber, filter))
+            {
+                while (cursor.MoveNext())
+                {
+                    foreach (var current in cursor.Current)
+                    {
+                        var exchangeAndKey = current.Split(Delimiter);
+
+                        yield return (exchangeAndKey[0], exchangeAndKey[1]);
+                    }
+                }
+            }
         }
     }
 }

@@ -46,12 +46,12 @@
 
         private void NotifyAboutIndexedBlock(BlockIndexed message)
         {
-            _erc20BalanceChangesObserver.Tell(message, Self);
+            _erc20TransferCommitsObserver.Tell(message, Self);
         }
 
         private void NotifyAboutIndexedBlockBalances(BlockBalancesIndexed message)
         {
-            _erc20TransferCommitsObserver.Tell(message, Self);
+            _erc20BalanceChangesObserver.Tell(message, Self);
         }
 
         private void Process(IndexerNotificationReceived message)

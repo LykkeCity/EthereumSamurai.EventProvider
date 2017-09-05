@@ -10,8 +10,7 @@
     using Repositories.Interfaces;
     using Repositories.Queries;
 
-
-
+    
     internal sealed class Erc20BalanceChangesReplayManagerBehavior : IErc20BalanceChangesReplayManagerBehavior
     {
         private readonly IErc20BalanceRepository _balances;
@@ -24,6 +23,8 @@
 
         public void Process(ReplayErc20BalanceChanges message, Action<Notify> sendNotificationAction)
         {
+            // TODO: Ensure, that subscriber exists
+
             var notifications = new Queue<Notify>();
             var balances      = _balances.Get(new Erc20BalancesQuery
             {

@@ -3,12 +3,14 @@
     using System;
     using System.IO;
     using Autofac;
+    using Filters;
     using Hosting;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.PlatformAbstractions;
     using Options;
+    using Service.Actors.Proxies;
     using Swashbuckle.AspNetCore.Swagger;
 
 
@@ -28,7 +30,7 @@
         public override void Configure(IApplicationBuilder app)
         {
             app.UseMvc();
-
+            
             app.UseSwagger();
             
             app.UseSwaggerUI(opt =>
@@ -40,7 +42,11 @@
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
-                .AddMvc();
+                .AddMvc()
+                .AddMvcOptions(x =>
+                {
+                    x.Filters.Insert(0, new ValidateModelFilter());
+                });
 
             services
                 .AddOptions();
@@ -59,6 +65,12 @@
 
                     opt.IncludeXmlComments(xmlDocPath);
                 });
+
+            services
+                .AddSingleton<IErc20BalanceChangesReplayManagerProxy, Erc20BalanceChangesReplayManagerProxy>()
+                .AddSingleton<IErc20BalanceChangesSubscribtionManagerProxy, Erc20BalanceChangesSubscribtionManagerProxy>()
+                .AddSingleton<IErc20TransferCommitsReplayManagerProxy, Erc20TransferCommitsReplayManagerProxy>()
+                .AddSingleton<IErc20TransferCommitsSubscriptionManagerProxy, Erc20TransferCommitsSubscriptionManagerProxy>();
 
             services
                 .Configure<ApiOptions>(_configuration.GetSection("Api"));

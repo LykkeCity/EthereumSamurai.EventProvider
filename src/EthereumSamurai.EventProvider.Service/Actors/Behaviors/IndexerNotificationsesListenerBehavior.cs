@@ -47,15 +47,15 @@
                 switch (type.ToLowerInvariant())
                 {
                     case "block":
-                        notifyAboutIndexedBlockBalancesAction
-                        (
-                            new BlockBalancesIndexed(blockNumber)
-                        );
-                        return;
-                    case "ercbalances":
                         notifyAboutIndexedBlockAction
                         (
                             new BlockIndexed(blockNumber)
+                        );
+                        return;
+                    case "ercbalances":
+                        notifyAboutIndexedBlockBalancesAction
+                        (
+                            new BlockBalancesIndexed(blockNumber)
                         );
                         return;
                     default:
@@ -74,6 +74,7 @@
             (
                 queue:      _options.NotificationsQueue,
                 durable:    true,
+                exclusive:  false,
                 autoDelete: false
             );
 

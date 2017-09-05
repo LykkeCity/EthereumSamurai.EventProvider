@@ -12,16 +12,24 @@
     {
         public void ConfigureServices(ContainerBuilder builder)
         {
-            builder.RegisterInstance(ActorSystem.Create
+            var actorSystem = ActorSystem.Create
             (
                 name:   "EthereumSamuraiEventProvider",
                 config: GetActorSystemConfig()
-            ));
-
-            builder.RegisterInstance
-            (
-                GetApplicationConfig()
             );
+
+            builder
+                .RegisterInstance(actorSystem);
+
+            builder
+                .RegisterInstance(actorSystem)
+                .As<IActorRefFactory>();
+
+            builder
+                .RegisterInstance
+                (
+                    GetApplicationConfig()
+                );
         }
 
 

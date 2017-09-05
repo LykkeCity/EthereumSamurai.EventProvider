@@ -1,5 +1,6 @@
 ﻿namespace EthereumSamurai.EventProvider.Api.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Validation;
 
@@ -14,6 +15,12 @@
         /// </summary>
         [Required, EthereumAddress]
         public string AssetHolder { get; set; }
+
+        /// <summary>
+        ///    Get balances for these contracts. Leave null or empty, to get balances for all contracts.
+        /// </summary>
+        [EthereumAddressList]
+        public IEnumerable<string> Contracts { get; set; }
 
         /// <summary>
         ///    Send balances to this exchange.

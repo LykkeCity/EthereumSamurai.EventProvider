@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  ethereumsamurai.eventprovider:
+    image: ethereumsamurai.eventprovider
+    build:
+      context: ./src/EthereumSamurai.EventProvider
+      dockerfile: Dockerfile

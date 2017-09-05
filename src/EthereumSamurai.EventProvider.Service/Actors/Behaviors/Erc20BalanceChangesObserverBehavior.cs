@@ -64,6 +64,8 @@
                     balance.ContractAddress
                 );
 
+                // TODO: Ensure, that subscribers exist
+
                 notifications.EnqueueMulticastRange(changeNotification, balanceSubscribers);
             }
 

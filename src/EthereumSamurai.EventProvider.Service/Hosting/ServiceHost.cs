@@ -93,7 +93,7 @@
                 routerConfig: new SmallestMailboxPool(_options.NumberOfErc20BalanceChangesReplayManagers)
             );
 
-            CreateActor<Erc20BalanceChangesSubscribtionManagerActor>
+            CreateActor<Erc20TransferCommitsSubscriptionManagerActor>
             (
                 metadata:     ActorPaths.Erc20TransferCommitsSubscriptionManager,
                 routerConfig: new SmallestMailboxPool(_options.NumberOfErc20TransferCommitsSubscriptionManagers)

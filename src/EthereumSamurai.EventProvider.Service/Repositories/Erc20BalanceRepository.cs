@@ -22,7 +22,7 @@
         
         public IEnumerable<Erc20BalanceEntity> Get(Erc20BalancesQuery query)
         {
-            const int pageSize = 100;
+            const int pageSize = 1000;
             var pageIndex      = 0;
 
             while(true)

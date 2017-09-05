@@ -5,7 +5,7 @@
         public IndexerNotificationListenerOptions()
         {
             NotificationsExchange = "lykke.ethereum.indexer";
-            NotificationsQueue    = "event-provider-indexer-notificationss";
+            NotificationsQueue    = "lykke-ethereum-event-provider-indexer-notifications";
         }
 
         public string NotificationsExchange { get; set; }

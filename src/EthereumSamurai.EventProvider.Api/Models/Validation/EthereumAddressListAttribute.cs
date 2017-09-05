@@ -8,7 +8,8 @@
     {
         public override bool IsValid(object value)
         {
-            return value is IEnumerable<string> values
+            return value == null
+                || value is IEnumerable<string> values
                 && values.All(base.IsValid);
         }
     }

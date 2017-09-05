@@ -10,7 +10,7 @@
         [Required]
         public string AssetHolder { get; set; }
 
-        [Required, EthereumAddressList]
+        [EthereumAddressList]
         public IEnumerable<string> Contracts { get; set; }
 
         [Required]

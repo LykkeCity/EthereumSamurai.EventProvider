@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Collections.Immutable;
-    using System.Linq;
+
 
     public class ReplayErc20BalanceChanges
     {
@@ -14,8 +14,8 @@
             RoutingKey  = routingKey;
         }
 
-        public ReplayErc20BalanceChanges(string exchange, string routingKey, int replayId, string assetHolder)
-            : this(exchange, routingKey, assetHolder, Enumerable.Empty<string>())
+        public ReplayErc20BalanceChanges(string exchange, string routingKey, int replayId, string assetHolder, IEnumerable<string> contracts)
+            : this(exchange, routingKey, assetHolder, contracts)
         {
             ReplayId = replayId;
         }

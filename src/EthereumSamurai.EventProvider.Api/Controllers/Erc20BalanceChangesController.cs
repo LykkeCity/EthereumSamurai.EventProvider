@@ -1,6 +1,5 @@
 ﻿namespace EthereumSamurai.EventProvider.Api.Controllers
 {
-    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using Service.Actors.Proxies;
     using Microsoft.AspNetCore.Mvc;
@@ -32,13 +31,14 @@
         /// </param>
         /// <returns></returns>
         [HttpPost("replay-requests")]
-        public IActionResult Replay([FromBody, Required] Erc20BalanceChangesReplayRequest request)
+        public IActionResult Replay([FromBody] Erc20BalanceChangesReplayRequest request)
         {
             _replayManager.Tell(new ReplayErc20BalanceChanges(
                 exchange:     request.Exchange,
                 routingKey:   request.RoutingKey,
-                replayId: request.ReplayId,
-                assetHolder:  request.AssetHolder.ToLowerInvariant()
+                replayId:     request.ReplayId,
+                assetHolder:  request.AssetHolder.ToLowerInvariant(),
+                contracts:    request.Contracts?.Select(x => x.ToLowerInvariant()) ?? Enumerable.Empty<string>()
             ));
 
             return Ok();
@@ -52,28 +52,28 @@
         /// </param>
         /// <returns></returns>
         [HttpPost("subscriptions")]
-        public IActionResult Subscribe([FromBody, Required] Erc20BalanceChangesSubscription subscription)
+        public IActionResult Subscribe([FromBody] Erc20BalanceChangesSubscription subscription)
         {
             _subscribtionManager.Tell(new SubscribeToErc20BalanceChanges
             (
                 exchange:    subscription.Exchange,
                 routingKey:  subscription.RoutingKey,
                 assetHolder: subscription.AssetHolder.ToLowerInvariant(),
-                contracts:   subscription.Contracts.Select(x => x.ToLowerInvariant())
+                contracts:   subscription.Contracts?.Select(x => x.ToLowerInvariant()) ?? Enumerable.Empty<string>()
             ));
 
             return Ok();
         }
 
         [HttpDelete("subscriptions")]
-        public IActionResult Unsubscribe([FromBody, Required] Erc20BalanceChangesSubscription subscription)
+        public IActionResult Unsubscribe([FromBody] Erc20BalanceChangesSubscription subscription)
         {
             _subscribtionManager.Tell(new UnsubscribeFromErc20BalanceChanges
             (
                 exchange:    subscription.Exchange,
                 routingKey:  subscription.RoutingKey,
                 assetHolder: subscription.AssetHolder.ToLowerInvariant(),
-                contracts:   subscription.Contracts.Select(x => x.ToLowerInvariant())
+                contracts:   subscription.Contracts?.Select(x => x.ToLowerInvariant()) ?? Enumerable.Empty<string>()
             ));
             
             return Ok();

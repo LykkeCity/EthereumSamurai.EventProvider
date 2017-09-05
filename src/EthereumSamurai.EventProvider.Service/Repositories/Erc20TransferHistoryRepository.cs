@@ -23,7 +23,7 @@
 
         public IEnumerable<Erc20TransferHistoryEntity> Get(Erc20TransferHistoriesQuery query)
         {
-            const int pageSize = 100;
+            const int pageSize = 1000;
             var pageNumber     = 0;
 
             while (true)

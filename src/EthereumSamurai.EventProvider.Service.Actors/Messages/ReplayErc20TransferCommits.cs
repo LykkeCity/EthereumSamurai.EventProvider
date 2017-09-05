@@ -2,15 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Collections.Immutable;
-    using System.Linq;
+
 
     public sealed class ReplayErc20TransferCommits
     {
-        internal ReplayErc20TransferCommits(
-            string              exchange, 
-            string              routingKey, 
-            string              assetHolder, 
-            IEnumerable<string> contracts)
+        internal ReplayErc20TransferCommits(string exchange, string routingKey, string assetHolder, IEnumerable<string> contracts)
         {
             AssetHolder = assetHolder;
             Contracts   = contracts.ToImmutableArray();
@@ -18,11 +14,8 @@
             RoutingKey  = routingKey;
         }
 
-        public ReplayErc20TransferCommits(
-            string exchange,
-            string routingKey,
-            int    replayId,
-            string assetHolder) : this(exchange, routingKey, assetHolder, Enumerable.Empty<string>())
+        public ReplayErc20TransferCommits(string exchange, string routingKey, int replayId, string assetHolder, IEnumerable<string> contracts)
+            : this(exchange, routingKey, assetHolder, contracts)
         {
             ReplayId = replayId;
         }

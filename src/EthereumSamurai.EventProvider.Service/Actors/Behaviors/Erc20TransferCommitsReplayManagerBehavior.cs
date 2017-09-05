@@ -10,7 +10,7 @@
     using Repositories.Interfaces;
     using Repositories.Queries;
 
-
+    
     internal sealed class Erc20TransferCommitsReplayManagerBehavior : IErc20TransferCommitsReplayManagerBehavior
     {
         private readonly IErc20TransferHistoryRepository _transfers;
@@ -23,6 +23,8 @@
 
         public void Process(ReplayErc20TransferCommits message, Action<Notify> sendNotificationAction)
         {
+            // TODO: Ensure, that exchange exists
+
             var notifications = new Queue<Notify>();
             var transfers     = _transfers.Get(new Erc20TransferHistoriesQuery
             {
