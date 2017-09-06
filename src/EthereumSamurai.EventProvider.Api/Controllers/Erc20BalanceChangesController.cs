@@ -45,7 +45,7 @@
         }
 
         /// <summary>
-        ///    Adds specified subscription .
+        ///    Adds specified subscription.
         /// </summary>
         /// <param name="subscription">
         ///    New subscription model.
@@ -65,6 +65,13 @@
             return Ok();
         }
 
+        /// <summary>
+        ///    Remove specified subscription.
+        /// </summary>
+        /// <param name="subscription">
+        ///    Subscription model.
+        /// </param>
+        /// <returns></returns>
         [HttpDelete("subscriptions")]
         public IActionResult Unsubscribe([FromBody] Erc20BalanceChangesSubscription subscription)
         {

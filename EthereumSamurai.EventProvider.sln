@@ -17,13 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Core", "src\EthereumSamurai.EventProvider.Core\EthereumSamurai.EventProvider.Core.csproj", "{B72BE251-3862-4816-99F7-6E4D1ABF0FF8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EBE2F530-8B9B-47A7-B864-C91FDB228FAA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EBE2F530-8B9B-47A7-B864-C91FDB228FAA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Core.Tests", "test\EthereumSamurai.EventProvider.Core.Tests\EthereumSamurai.EventProvider.Core.Tests.csproj", "{7DF16F00-B902-4616-88E7-DCDBB340C7A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Core.Tests", "tests\EthereumSamurai.EventProvider.Core.Tests\EthereumSamurai.EventProvider.Core.Tests.csproj", "{7DF16F00-B902-4616-88E7-DCDBB340C7A6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Api.Tests", "test\EthereumSamurai.EventProvider.Api.Tests\EthereumSamurai.EventProvider.Api.Tests.csproj", "{E2D964ED-634C-475A-9270-2C010D73DCD0}"
-EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A3BF315A-4B59-45E7-AF6D-87CB57B323CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumSamurai.EventProvider.Api.Tests", "tests\EthereumSamurai.EventProvider.Api.Tests\EthereumSamurai.EventProvider.Api.Tests.csproj", "{E2D964ED-634C-475A-9270-2C010D73DCD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,10 +61,6 @@ Global
 		{E2D964ED-634C-475A-9270-2C010D73DCD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2D964ED-634C-475A-9270-2C010D73DCD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2D964ED-634C-475A-9270-2C010D73DCD0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3BF315A-4B59-45E7-AF6D-87CB57B323CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3BF315A-4B59-45E7-AF6D-87CB57B323CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3BF315A-4B59-45E7-AF6D-87CB57B323CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3BF315A-4B59-45E7-AF6D-87CB57B323CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,7 +74,6 @@ Global
 		{B72BE251-3862-4816-99F7-6E4D1ABF0FF8} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
 		{7DF16F00-B902-4616-88E7-DCDBB340C7A6} = {EBE2F530-8B9B-47A7-B864-C91FDB228FAA}
 		{E2D964ED-634C-475A-9270-2C010D73DCD0} = {EBE2F530-8B9B-47A7-B864-C91FDB228FAA}
-		{A3BF315A-4B59-45E7-AF6D-87CB57B323CC} = {0FAFC1B8-B0C8-494E-A58A-39B22DB04735}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C814E8FB-3A36-4588-AF1E-4B687FE2B127}

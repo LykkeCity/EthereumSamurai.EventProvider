@@ -2,7 +2,14 @@ version: '3'
 
 services:
   ethereumsamurai.eventprovider:
-    image: ethereumsamurai.eventprovider
-    build:
-      context: ./src/EthereumSamurai.EventProvider
-      dockerfile: Dockerfile
+    image: lykkedev/lykke-ethereum-indexer-event-provider:${tag}
+    ports:
+     - "${Port:-5000}:5000"
+    environment:
+     - ConnectionStrings__LykkeSettings=${ConnectionStringsLykkeSettings}
+     - Service__Host__NumberOfErc20BalanceChangesReplayManagers=${NumberOfErc20BalanceChangesReplayManagers:-1}
+     - Service__Host__NumberOfErc20BalanceChangesSubscriptionManagers=${NumberOfErc20BalanceChangesSubscriptionManagers:-1}
+     - Service__Host__NumberOfErc20TransferCommitsObservers=${NumberOfErc20TransferCommitsObservers:-1}
+     - Service__Host__NumberOfErc20TransferCommitsReplayManagers=${NumberOfErc20TransferCommitsReplayManagers:-1}
+     - Service__Host__NumberOfErc20TransferCommitsSubscriptionManagers=${NumberOfErc20TransferCommitsSubscriptionManagers:-1}
+     - Service__Host__NumberOfSubscribersNotifiers=${NumberOfSubscribersNotifiers:-1}

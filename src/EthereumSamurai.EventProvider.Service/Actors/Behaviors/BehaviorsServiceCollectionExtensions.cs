@@ -35,7 +35,7 @@
 
         private static IServiceCollection AddRabbitMqChannel(this IServiceCollection services)
         {
-            return services.AddSingleton(provider =>
+            return services.AddTransient(provider =>
             {
                 var configuration    = provider.GetService<IConfigurationRoot>();
                 var connectionString = configuration.GetConnectionString("RabbitMQ");

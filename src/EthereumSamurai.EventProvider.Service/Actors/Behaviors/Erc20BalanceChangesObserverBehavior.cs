@@ -72,6 +72,8 @@
             // Sending notifications with specified delegate
             
             notifications.ForEachDequeue(sendNotificationAction);
+
+            Console.WriteLine(message.BlockNumber);
         }
     }
 }

@@ -35,7 +35,7 @@
 
             webhostBuilder.UseSetting("applicationName", "EthereumSamurai.EventProvider.Api");
 
-            var host = _configuration.GetValue<string>("Api:Host");
+            var host = _configuration.GetValue<string>("Api:Host") ?? "http://*:5000";
             if (!string.IsNullOrEmpty(host))
             {
                 webhostBuilder.UseUrls(host);

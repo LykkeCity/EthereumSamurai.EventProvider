@@ -27,8 +27,7 @@
             _channel = channel;
             _options = options.Value;
         }
-
-
+        
         public void Process(
             IndexerNotificationReceived  message,
             Action<BlockBalancesIndexed> notifyAboutIndexedBlockBalancesAction,
@@ -39,8 +38,7 @@
             
             if (notification.TryGetValue("IndexingMessageType",  out var typeToken) && 
                 notification.TryGetValue("BlockNumber",          out var blockNumberToken)  &&
-                ulong.TryParse(blockNumberToken.Value<string>(), out var blockNumber)
-             )
+                ulong.TryParse(blockNumberToken.Value<string>(), out var blockNumber))
             {
                 var type = typeToken.Value<string>();
                 

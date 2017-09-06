@@ -22,6 +22,13 @@
             _subscriptionManager = subscriptionManager;
         }
 
+        /// <summary>
+        ///    Adds specified replay request to the queue.
+        /// </summary>
+        /// <param name="request">
+        ///    Erc20 transfer commits replay request.
+        /// </param>
+        /// <returns></returns>
         [HttpPost("replay-requests")]
         public IActionResult Replay([FromBody] Erc20TransferCommitsReplayRequest request)
         {
@@ -36,6 +43,13 @@
             return Ok();
         }
 
+        /// <summary>
+        ///    Adds specified subscription.
+        /// </summary>
+        /// <param name="subscription">
+        ///    New subscription model.
+        /// </param>
+        /// <returns></returns>
         [HttpPost("subscriptions")]
         public IActionResult Subscribe([FromBody] Erc20TransferCommitsSubscription subscription)
         {
@@ -49,6 +63,13 @@
             return Ok();
         }
 
+        /// <summary>
+        ///    Remove specified subscription.
+        /// </summary>
+        /// <param name="subscription">
+        ///    Subscription model.
+        /// </param>
+        /// <returns></returns>
         [HttpDelete("subscriptions")]
         public IActionResult Unsubscribe([FromBody] Erc20TransferCommitsSubscription subscription)
         {

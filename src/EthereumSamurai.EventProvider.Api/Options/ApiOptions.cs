@@ -6,5 +6,7 @@
         {
 
         }
+
+        public string Host { get; set; }
     }
 }
