@@ -46,7 +46,7 @@
         {
             return ConfigurationFactory.FromResource
             (
-                resourceName: "EthereumSamurai.EventProvider.Core.System.json",
+                resourceName: "EthereumSamurai.EventProvider.Core.system.json",
                 assembly:     Assembly.GetExecutingAssembly()
             );
         }
