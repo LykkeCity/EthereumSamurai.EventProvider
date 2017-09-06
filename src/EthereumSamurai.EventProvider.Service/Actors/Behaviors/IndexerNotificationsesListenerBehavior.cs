@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Text;
+    using Factories.Interfaces;
     using Interfaces;
     using Messages;
     using Microsoft.Extensions.Options;
@@ -10,6 +11,7 @@
     using Options;
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
+    using Repositories.Factories;
 
 
     internal class IndexerNotificationsesListenerBehavior : IIndexerNotificationsListenerBehavior
@@ -21,13 +23,14 @@
 
 
         public IndexerNotificationsesListenerBehavior(
-            IModel channel,
+            IChannelFactory                              channelFactory,
             IOptions<IndexerNotificationListenerOptions> options)
         {
-            _channel = channel;
+            _channel = channelFactory.GetChannel(ChannelType.Incoming);
             _options = options.Value;
         }
         
+
         public void Process(
             IndexerNotificationReceived  message,
             Action<BlockBalancesIndexed> notifyAboutIndexedBlockBalancesAction,

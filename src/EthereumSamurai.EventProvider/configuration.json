@@ -1,9 +1,10 @@
 ﻿{
   "ConnectionStrings": {
     "EthereumSamuraiApi": "",
+    "IncominRabbitMQ": "",
     "LykkeSettings": "",
     "MongoDb": "",
-    "RabbitMQ": ""
+    "OutgoingRabbitMQ": "" 
   },
   "Api": {
     "Host": "http://localhost:5000"

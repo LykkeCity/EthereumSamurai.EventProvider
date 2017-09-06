@@ -1,6 +1,6 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Actors.Extensions
 {
-    using Behaviors;
+    using Behaviors.Extensions;
     using Microsoft.Extensions.DependencyInjection;
 
 
