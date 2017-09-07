@@ -5,7 +5,9 @@
     using System.Net.Http;
     using Exceptions;
     using Microsoft.Extensions.Configuration;
-    
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
 
     /// <summary>
     ///    Extension methods for adding <see cref="Microsoft.Extensions.Configuration.Json.JsonConfigurationProvider"/> with configuration from Lykke's settings server.
@@ -24,15 +26,15 @@
         /// <returns>
         ///    The <see cref="IConfigurationBuilder"/>.
         /// </returns>
-        public static IConfigurationBuilder AddLykkeSettings(this IConfigurationBuilder builder, string connectionStringName)
+        public static IConfigurationBuilder AddLykkeSettings(this IConfigurationBuilder builder, string connectionStringName, string rootKey = null)
         {
-            return builder.AddLykkeSettings(new HttpClientHandler(), connectionStringName);
+            return builder.AddLykkeSettings(new HttpClientHandler(), connectionStringName, rootKey);
         }
 
         /// <remarks>
         ///    This overload should be used for unit tests only.
         /// </remarks>
-        internal static IConfigurationBuilder AddLykkeSettings(this IConfigurationBuilder builder, HttpMessageHandler handler, string connectionStringName)
+        internal static IConfigurationBuilder AddLykkeSettings(this IConfigurationBuilder builder, HttpMessageHandler handler, string connectionStringName, string rootKey = null)
         {
             if (string.IsNullOrEmpty(connectionStringName))
             {
@@ -52,6 +54,15 @@
                 {
                     var httpClient   = new HttpClient(handler);
                     var settingsData = httpClient.GetStringAsync(settingsUri).Result;
+                    
+                    if (rootKey != null)
+                    {
+                        settingsData = JObject
+                            .Parse(settingsData)
+                            .GetValue(rootKey)
+                            .ToString();
+                    }
+                    
                     var settingsFile = Path.GetTempFileName();
 
                     File.WriteAllText(settingsFile, settingsData);

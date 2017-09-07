@@ -63,7 +63,7 @@
                 // You should place sensitive information for production purposes here...
                 .AddEnvironmentVariables()
                 // ...and here.
-                .AddLykkeSettings("LykkeSettings");
+                .AddLykkeSettings("LykkeSettings", "EthereumIndexerEventProvider");
 
             return builder.Build();
         }

@@ -1,6 +1,6 @@
 ﻿{
   "ConnectionStrings": {
-    "EthereumSamuraiApi": "",
+    "EthereumIndexerApi": "",
     "IncominRabbitMQ": "",
     "LykkeSettings": "",
     "MongoDb": "",

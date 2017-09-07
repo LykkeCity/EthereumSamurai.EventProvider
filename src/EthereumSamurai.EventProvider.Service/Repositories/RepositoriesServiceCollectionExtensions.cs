@@ -31,7 +31,7 @@
             return services.AddSingleton<IEthereumSamuraiApi>(provider =>
             {
                 var configuration = provider.GetService<IConfigurationRoot>();
-                var apiHostString = configuration.GetConnectionString("EthereumSamuraiApi");
+                var apiHostString = configuration.GetConnectionString("EthereumIndexerApi");
                 var apiHost       = new Uri(apiHostString, UriKind.Absolute);
 
                 return new EthereumSamuraiApi(apiHost);
