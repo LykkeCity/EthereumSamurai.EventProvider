@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Extensions;
+    using Actors.Extensions;
     using Interfaces;
     using Messages;
     using Notifications;

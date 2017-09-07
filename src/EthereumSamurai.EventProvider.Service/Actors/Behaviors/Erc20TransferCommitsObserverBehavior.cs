@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Extensions;
+    using Actors.Extensions;
     using Interfaces;
     using Messages;
     using Notifications;
