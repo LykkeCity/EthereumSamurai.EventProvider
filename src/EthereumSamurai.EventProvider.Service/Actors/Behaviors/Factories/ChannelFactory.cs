@@ -24,7 +24,7 @@
             switch (type)
             {
                 case ChannelType.Incoming:
-                    connectionStringName = "IncominRabbitMQ";
+                    connectionStringName = "IncomingRabbitMQ";
                     break;
                 case ChannelType.Outgoing:
                     connectionStringName = "OutgoingRabbitMQ";
