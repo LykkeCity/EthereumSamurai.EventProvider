@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc.Filters;
 
 
-    public class ValidateModelFilter : IActionFilter
+    internal class ValidateModelFilter : IActionFilter
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {
