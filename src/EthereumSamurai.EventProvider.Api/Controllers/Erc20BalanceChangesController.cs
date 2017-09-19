@@ -7,19 +7,26 @@
     using Service.Actors.Messages;
 
 
+    /// <inheritdoc />
+    /// <summary>
+    ///    The <see cref="Erc20BalanceChangesController"/> class.
+    /// </summary>
     [Route("api/erc20BalanceChanges")]
     public sealed class Erc20BalanceChangesController : Controller
     {
         private readonly IErc20BalanceChangesReplayManagerProxy       _replayManager;
-        private readonly IErc20BalanceChangesSubscribtionManagerProxy _subscribtionManager;
+        private readonly IErc20BalanceChangesSubscribtionManagerProxy _subscriptionManager;
 
 
+        /// <summary>
+        ///    Initializes a new instance of the <see cref="Erc20BalanceChangesController"/> class.
+        /// </summary>
         public Erc20BalanceChangesController(
             IErc20BalanceChangesReplayManagerProxy       replayManager,
-            IErc20BalanceChangesSubscribtionManagerProxy subscribtionManager)
+            IErc20BalanceChangesSubscribtionManagerProxy subscriptionManager)
         {
             _replayManager       = replayManager;
-            _subscribtionManager = subscribtionManager;
+            _subscriptionManager = subscriptionManager;
         }
 
 
@@ -29,7 +36,6 @@
         /// <param name="request">
         ///    Erc20 balance changes replay request.
         /// </param>
-        /// <returns></returns>
         [HttpPost("replay-requests")]
         public IActionResult Replay([FromBody] Erc20BalanceChangesReplayRequest request)
         {
@@ -50,11 +56,10 @@
         /// <param name="subscription">
         ///    New subscription model.
         /// </param>
-        /// <returns></returns>
         [HttpPost("subscriptions")]
         public IActionResult Subscribe([FromBody] Erc20BalanceChangesSubscription subscription)
         {
-            _subscribtionManager.Tell(new SubscribeToErc20BalanceChanges
+            _subscriptionManager.Tell(new SubscribeToErc20BalanceChanges
             (
                 exchange:    subscription.Exchange,
                 routingKey:  subscription.RoutingKey,
@@ -71,11 +76,10 @@
         /// <param name="subscription">
         ///    Subscription model.
         /// </param>
-        /// <returns></returns>
         [HttpDelete("subscriptions")]
         public IActionResult Unsubscribe([FromBody] Erc20BalanceChangesSubscription subscription)
         {
-            _subscribtionManager.Tell(new UnsubscribeFromErc20BalanceChanges
+            _subscriptionManager.Tell(new UnsubscribeFromErc20BalanceChanges
             (
                 exchange:    subscription.Exchange,
                 routingKey:  subscription.RoutingKey,

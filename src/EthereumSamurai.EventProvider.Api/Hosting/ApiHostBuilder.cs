@@ -8,12 +8,15 @@
     using Microsoft.Extensions.DependencyInjection;
 
 
+    /// <inheritdoc />
     public sealed class ApiHostBuilder : IApiHostBuilder
     {
         private readonly IConfigurationRoot _configuration;
         private readonly ILifetimeScope     _parentScope;
 
-
+        /// <summary>
+        ///    Initializes a new instance of the <see cref="ApiHostBuilder"/> class.
+        /// </summary>
         public ApiHostBuilder(
             IConfigurationRoot configuration,
             ILifetimeScope     parentScope)
@@ -22,7 +25,7 @@
             _parentScope   = parentScope;
         }
 
-        
+        /// <inheritdoc />
         public IWebHost Build()
         {
             var startup        = new Startup(_configuration, _parentScope);

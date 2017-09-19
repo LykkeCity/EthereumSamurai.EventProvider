@@ -7,13 +7,19 @@
     using Service.Actors.Messages;
 
 
+    /// <inheritdoc />
+    /// <summary>
+    ///    The <see cref="Erc20TransferCommitsController"/> class.
+    /// </summary>
     [Route("api/[controller]")]
     public class Erc20TransferCommitsController : Controller
     {
         private readonly IErc20TransferCommitsReplayManagerProxy       _replayManager;
         private readonly IErc20TransferCommitsSubscriptionManagerProxy _subscriptionManager;
 
-    
+        /// <summary>
+        ///    Initializes a new instance of the <see cref="Erc20TransferCommitsController"/> class.
+        /// </summary>
         public Erc20TransferCommitsController(
            IErc20TransferCommitsReplayManagerProxy       replayManager,
            IErc20TransferCommitsSubscriptionManagerProxy subscriptionManager)
@@ -23,12 +29,11 @@
         }
 
         /// <summary>
-        ///    Adds specified replay request to the queue.
+        ///    Adds specified replay request to the queue
         /// </summary>
         /// <param name="request">
-        ///    Erc20 transfer commits replay request.
+        ///    Erc20 transfer commits replay request
         /// </param>
-        /// <returns></returns>
         [HttpPost("replay-requests")]
         public IActionResult Replay([FromBody] Erc20TransferCommitsReplayRequest request)
         {
@@ -44,12 +49,11 @@
         }
 
         /// <summary>
-        ///    Adds specified subscription.
+        ///    Adds specified subscription
         /// </summary>
         /// <param name="subscription">
-        ///    New subscription model.
+        ///    New subscription model
         /// </param>
-        /// <returns></returns>
         [HttpPost("subscriptions")]
         public IActionResult Subscribe([FromBody] Erc20TransferCommitsSubscription subscription)
         {
@@ -64,12 +68,11 @@
         }
 
         /// <summary>
-        ///    Remove specified subscription.
+        ///    Remove specified subscription
         /// </summary>
         /// <param name="subscription">
-        ///    Subscription model.
+        ///    Subscription model
         /// </param>
-        /// <returns></returns>
         [HttpDelete("subscriptions")]
         public IActionResult Unsubscribe([FromBody] Erc20TransferCommitsSubscription subscription)
         {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Reflection;
     using Autofac;
     using Filters;
     using Hosting;
@@ -57,9 +58,12 @@
                     opt.SwaggerDoc
                     (
                         name: "api",
-                        info: new Info()
+                        info: new Info
+                        {
+                            Version = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion
+                        }
                     );
-
+                    
                     var basePath   = PlatformServices.Default.Application.ApplicationBasePath;
                     var xmlDocPath = Path.Combine(basePath, "EthereumSamurai.EventProvider.Api.xml");
 
