@@ -1,10 +1,8 @@
 ﻿namespace EthereumSamurai.EventProvider.Service.Actors.Behaviors.Extensions
 {
-    using System;
     using Factories;
     using Factories.Interfaces;
     using Interfaces;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
 
